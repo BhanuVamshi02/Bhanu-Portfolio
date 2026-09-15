@@ -1,129 +1,212 @@
 /* =========================================================
    BHANU VAMSHI PORTFOLIO
-   Vanilla JavaScript
-========================================================= */
+   script.js
+   ========================================================= */
 
 
 /* =========================================================
    DOM READY
-========================================================= */
+   ========================================================= */
 
 document.addEventListener("DOMContentLoaded", () => {
 
-    initializeNavigation();
 
-    initializeMobileMenu();
+    /* =====================================================
+       ELEMENTS
+       ===================================================== */
 
-    initializeTheme();
+    const hero =
+        document.querySelector(".hero");
 
-    initializeScrollSpy();
+    const topbar =
+        document.querySelector(".topbar");
 
-    initializeRevealAnimations();
+    const menuButton =
+        document.getElementById("menuButton");
 
-    initializeParticles();
+    const mobileNav =
+        document.getElementById("mobileNav");
 
-    initializeParallax();
+    const themeToggle =
+        document.getElementById("themeToggle");
 
-    initializeSmoothLinks();
+    const contactForm =
+        document.getElementById("contactForm");
 
-});
+    const formStatus =
+        document.getElementById("formStatus");
+
+    const yearElement =
+        document.getElementById("year");
+
+    const navLinks =
+        document.querySelectorAll(
+            ".desktop-nav .nav-link"
+        );
+
+    const mobileLinks =
+        document.querySelectorAll(
+            ".mobile-nav a"
+        );
 
 
+    /* =====================================================
+       YEAR
+       ===================================================== */
 
-/* =========================================================
-   NAVIGATION
-========================================================= */
+    if (yearElement) {
 
-function initializeNavigation() {
+        yearElement.textContent =
+            new Date().getFullYear();
 
-    const header = document.getElementById("header");
-
-    if (!header) {
-        return;
     }
 
-    window.addEventListener(
-        "scroll",
-        () => {
 
-            if (window.scrollY > 30) {
+    /* =====================================================
+       HERO SCROLL OVERLAY
+       
+       IMPORTANT BEHAVIOR:
 
-                header.classList.add("scrolled");
+       At top:
+           .hero.scrolled is REMOVED
+           background-overlay = opacity 0
+
+       After scrolling:
+           .hero.scrolled is ADDED
+           background-overlay = opacity 1
+       ===================================================== */
+
+    function updateHeroScrollState() {
+
+        if (!hero) {
+            return;
+        }
+
+        const scrollPosition =
+            window.scrollY;
+
+        const scrollThreshold =
+            80;
+
+
+        if (
+            scrollPosition >
+            scrollThreshold
+        ) {
+
+            hero.classList.add(
+                "scrolled"
+            );
+
+        } else {
+
+            hero.classList.remove(
+                "scrolled"
+            );
+
+        }
+
+
+        /* Header subtle scroll effect */
+
+        if (topbar) {
+
+            if (
+                scrollPosition >
+                30
+            ) {
+
+                topbar.classList.add(
+                    "is-scrolled"
+                );
 
             } else {
 
-                header.classList.remove("scrolled");
+                topbar.classList.remove(
+                    "is-scrolled"
+                );
 
             }
 
-        },
+        }
+
+    }
+
+
+    /* Run immediately */
+
+    updateHeroScrollState();
+
+
+    /* Run during scroll */
+
+    window.addEventListener(
+        "scroll",
+        updateHeroScrollState,
         {
             passive: true
         }
     );
 
-}
 
+    /* =====================================================
+       MOBILE MENU
+       ===================================================== */
 
+    function closeMobileMenu() {
 
-/* =========================================================
-   MOBILE MENU
-========================================================= */
+        if (!mobileNav) {
+            return;
+        }
 
-function initializeMobileMenu() {
+        mobileNav.classList.remove(
+            "open"
+        );
 
-    const button =
-        document.getElementById("mobileMenu");
+        if (menuButton) {
 
-    const menu =
-        document.getElementById("mobileNav");
+            menuButton.setAttribute(
+                "aria-expanded",
+                "false"
+            );
 
-    if (!button || !menu) {
-        return;
+        }
+
     }
 
 
-    button.addEventListener(
-        "click",
-        () => {
+    if (menuButton && mobileNav) {
 
-            menu.classList.toggle("open");
+        menuButton.addEventListener(
+            "click",
+            () => {
 
-            const icon =
-                button.querySelector("i");
+                const isOpen =
+                    mobileNav.classList.toggle(
+                        "open"
+                    );
 
-            if (
-                menu.classList.contains("open")
-            ) {
-
-                icon.className =
-                    "fa-solid fa-xmark";
-
-            } else {
-
-                icon.className =
-                    "fa-solid fa-bars";
+                menuButton.setAttribute(
+                    "aria-expanded",
+                    String(isOpen)
+                );
 
             }
+        );
 
-        }
-    );
+    }
 
 
-    menu.querySelectorAll("a").forEach(
-        link => {
+    /* Close mobile menu after selecting link */
+
+    mobileLinks.forEach(
+        (link) => {
 
             link.addEventListener(
                 "click",
                 () => {
 
-                    menu.classList.remove("open");
-
-                    const icon =
-                        button.querySelector("i");
-
-                    icon.className =
-                        "fa-solid fa-bars";
+                    closeMobileMenu();
 
                 }
             );
@@ -131,97 +214,130 @@ function initializeMobileMenu() {
         }
     );
 
-}
 
+    /* Close menu when clicking outside */
 
-
-/* =========================================================
-   THEME TOGGLE
-========================================================= */
-
-function initializeTheme() {
-
-    const toggle =
-        document.getElementById("themeToggle");
-
-    if (!toggle) {
-        return;
-    }
-
-
-    const savedTheme =
-        localStorage.getItem("bhanu-theme");
-
-
-    if (savedTheme === "light") {
-
-        document.body.classList.add(
-            "light-mode"
-        );
-
-    }
-
-
-    toggle.addEventListener(
+    document.addEventListener(
         "click",
-        () => {
+        (event) => {
 
-            document.body.classList.toggle(
-                "light-mode"
-            );
+            if (
+                !mobileNav ||
+                !menuButton
+            ) {
+                return;
+            }
 
-
-            const isLight =
-                document.body.classList.contains(
-                    "light-mode"
+            const clickedInsideMenu =
+                mobileNav.contains(
+                    event.target
                 );
 
+            const clickedMenuButton =
+                menuButton.contains(
+                    event.target
+                );
 
-            localStorage.setItem(
-                "bhanu-theme",
-                isLight
-                    ? "light"
-                    : "dark"
-            );
+            if (
+                !clickedInsideMenu &&
+                !clickedMenuButton
+            ) {
+
+                closeMobileMenu();
+
+            }
 
         }
     );
 
-}
+
+    /* =====================================================
+       ESC KEY CLOSES MOBILE MENU
+       ===================================================== */
+
+    document.addEventListener(
+        "keydown",
+        (event) => {
+
+            if (
+                event.key === "Escape"
+            ) {
+
+                closeMobileMenu();
+
+            }
+
+        }
+    );
 
 
+    /* =====================================================
+       THEME TOGGLE
+       ===================================================== */
 
-/* =========================================================
-   SCROLL SPY
-========================================================= */
-
-function initializeScrollSpy() {
-
-    const sections =
-        document.querySelectorAll(
-            "section[id]"
-        );
-
-    const navLinks =
-        document.querySelectorAll(
-            ".nav-link"
+    const savedTheme =
+        localStorage.getItem(
+            "bhanu-theme"
         );
 
 
     if (
-        !sections.length ||
-        !navLinks.length
+        savedTheme === "light"
     ) {
-        return;
+
+        document.body.classList.add(
+            "light"
+        );
+
     }
 
 
-    const observer =
+    if (themeToggle) {
+
+        themeToggle.addEventListener(
+            "click",
+            () => {
+
+                document.body.classList.toggle(
+                    "light"
+                );
+
+
+                const isLight =
+                    document.body.classList.contains(
+                        "light"
+                    );
+
+
+                localStorage.setItem(
+                    "bhanu-theme",
+                    isLight
+                        ? "light"
+                        : "dark"
+                );
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       ACTIVE NAVIGATION
+       ===================================================== */
+
+    const sections =
+        document.querySelectorAll(
+            "main section[id]"
+        );
+
+
+    const sectionObserver =
         new IntersectionObserver(
-            entries => {
+            (entries) => {
 
                 entries.forEach(
-                    entry => {
+                    (entry) => {
 
                         if (
                             entry.isIntersecting
@@ -232,7 +348,7 @@ function initializeScrollSpy() {
 
 
                             navLinks.forEach(
-                                link => {
+                                (link) => {
 
                                     link.classList.remove(
                                         "active"
@@ -262,52 +378,105 @@ function initializeScrollSpy() {
 
             },
             {
-                threshold: 0.25,
-
                 rootMargin:
-                    "-80px 0px -45% 0px"
+                    "-35% 0px -55% 0px",
+
+                threshold:
+                    0
             }
         );
 
 
     sections.forEach(
-        section =>
-            observer.observe(section)
-    );
+        (section) => {
 
-}
-
-
-
-/* =========================================================
-   REVEAL ANIMATIONS
-========================================================= */
-
-function initializeRevealAnimations() {
-
-    const elements =
-        document.querySelectorAll(
-            ".about-panel, .experience-card, .role-detail, .education-card, .contact-panel"
-        );
-
-
-    elements.forEach(
-        element => {
-
-            element.classList.add(
-                "reveal"
+            sectionObserver.observe(
+                section
             );
 
         }
     );
 
 
-    const observer =
+    /* =====================================================
+       SMOOTH NAVIGATION
+       ===================================================== */
+
+    document.querySelectorAll(
+        'a[href^="#"]'
+    ).forEach(
+        (link) => {
+
+            link.addEventListener(
+                "click",
+                (event) => {
+
+                    const targetId =
+                        link.getAttribute(
+                            "href"
+                        );
+
+
+                    if (
+                        !targetId ||
+                        targetId === "#"
+                    ) {
+                        return;
+                    }
+
+
+                    const target =
+                        document.querySelector(
+                            targetId
+                        );
+
+
+                    if (!target) {
+                        return;
+                    }
+
+
+                    event.preventDefault();
+
+
+                    target.scrollIntoView({
+                        behavior:
+                            "smooth",
+
+                        block:
+                            "start"
+                    });
+
+                }
+            );
+
+        }
+    );
+
+
+    /* =====================================================
+       REVEAL ANIMATIONS
+       ===================================================== */
+
+    const revealElements =
+        document.querySelectorAll(
+            ".about-panel, " +
+            ".skills-preview, " +
+            ".experience-item, " +
+            ".skill-card, " +
+            ".services-panel, " +
+            ".education-panel, " +
+            ".contact-panel, " +
+            ".stats"
+        );
+
+
+    const revealObserver =
         new IntersectionObserver(
-            entries => {
+            (entries, observer) => {
 
                 entries.forEach(
-                    entry => {
+                    (entry) => {
 
                         if (
                             entry.isIntersecting
@@ -316,6 +485,7 @@ function initializeRevealAnimations() {
                             entry.target.classList.add(
                                 "visible"
                             );
+
 
                             observer.unobserve(
                                 entry.target
@@ -328,335 +498,297 @@ function initializeRevealAnimations() {
 
             },
             {
-                threshold: 0.12
+                threshold:
+                    0.12
             }
         );
 
 
-    elements.forEach(
-        element =>
-            observer.observe(element)
+    revealElements.forEach(
+        (element) => {
+
+            element.classList.add(
+                "reveal"
+            );
+
+            revealObserver.observe(
+                element
+            );
+
+        }
     );
 
-}
+
+    /* =====================================================
+       CONTACT FORM
+       
+       Since there is no backend configured, this does NOT
+       pretend to send an email.
+
+       It opens the user's email client using mailto.
+       ===================================================== */
+
+    if (contactForm) {
+
+        contactForm.addEventListener(
+            "submit",
+            (event) => {
+
+                event.preventDefault();
 
 
+                const name =
+                    document
+                        .getElementById("name")
+                        ?.value
+                        .trim();
 
-/* =========================================================
-   PARTICLES
-========================================================= */
 
-function initializeParticles() {
+                const email =
+                    document
+                        .getElementById("email")
+                        ?.value
+                        .trim();
 
-    const container =
+
+                const subject =
+                    document
+                        .getElementById("subject")
+                        ?.value
+                        .trim();
+
+
+                const message =
+                    document
+                        .getElementById("message")
+                        ?.value
+                        .trim();
+
+
+                if (
+                    !name ||
+                    !email ||
+                    !subject ||
+                    !message
+                ) {
+
+                    if (formStatus) {
+
+                        formStatus.textContent =
+                            "Please complete all fields.";
+
+                    }
+
+                    return;
+
+                }
+
+
+                const mailSubject =
+                    encodeURIComponent(
+                        subject
+                    );
+
+
+                const mailBody =
+                    encodeURIComponent(
+                        `Hello Bhanu,
+
+Name: ${name}
+Email: ${email}
+
+${message}`
+                    );
+
+
+                const mailtoUrl =
+                    `mailto:bhanuvamshi0211@gmail.com` +
+                    `?subject=${mailSubject}` +
+                    `&body=${mailBody}`;
+
+
+                if (formStatus) {
+
+                    formStatus.textContent =
+                        "Opening your email client...";
+
+                }
+
+
+                window.location.href =
+                    mailtoUrl;
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       PARTICLES
+       ===================================================== */
+
+    const particleContainer =
         document.getElementById(
             "particles"
         );
 
 
-    if (!container) {
-        return;
-    }
+    function createParticles() {
+
+        if (
+            !particleContainer
+        ) {
+            return;
+        }
 
 
-    const particleCount =
-        window.innerWidth < 700
-            ? 18
-            : 38;
+        const particleCount =
+            window.innerWidth < 600
+                ? 12
+                : 24;
 
 
-    for (
-        let i = 0;
-        i < particleCount;
-        i++
-    ) {
+        particleContainer.innerHTML =
+            "";
 
-        const particle =
-            document.createElement(
-                "span"
+
+        for (
+            let i = 0;
+            i < particleCount;
+            i++
+        ) {
+
+            const particle =
+                document.createElement(
+                    "span"
+                );
+
+
+            particle.className =
+                "particle";
+
+
+            particle.style.left =
+                `${Math.random() * 100}%`;
+
+
+            particle.style.top =
+                `${Math.random() * 100}%`;
+
+
+            particle.style.animationDelay =
+                `${Math.random() * 6}s`;
+
+
+            particle.style.animationDuration =
+                `${5 + Math.random() * 5}s`;
+
+
+            particleContainer.appendChild(
+                particle
             );
 
-
-        particle.className =
-            "particle";
-
-
-        const left =
-            Math.random() * 100;
-
-
-        const delay =
-            Math.random() * 12;
-
-
-        const duration =
-            8 +
-            Math.random() * 14;
-
-
-        const size =
-            1 +
-            Math.random() * 3;
-
-
-        particle.style.left =
-            `${left}%`;
-
-
-        particle.style.animationDelay =
-            `${delay}s`;
-
-
-        particle.style.animationDuration =
-            `${duration}s`;
-
-
-        particle.style.width =
-            `${size}px`;
-
-
-        particle.style.height =
-            `${size}px`;
-
-
-        container.appendChild(
-            particle
-        );
+        }
 
     }
 
-}
+
+    createParticles();
 
 
+    /* =====================================================
+       RESIZE PARTICLES
+       ===================================================== */
 
-/* =========================================================
-   PARALLAX
-========================================================= */
-
-function initializeParallax() {
-
-    const heroImage =
-        document.querySelector(
-            ".hero-character"
-        );
-
-    const background =
-        document.querySelector(
-            ".background-layer"
-        );
-
-
-    if (
-        !heroImage ||
-        !background
-    ) {
-        return;
-    }
-
-
-    let ticking = false;
+    let resizeTimer;
 
 
     window.addEventListener(
-        "scroll",
+        "resize",
         () => {
 
-            if (ticking) {
-                return;
-            }
-
-
-            window.requestAnimationFrame(
-                () => {
-
-                    const scrollY =
-                        window.scrollY;
-
-
-                    if (
-                        window.innerWidth > 980
-                    ) {
-
-                        heroImage.style.transform =
-                            `translateY(${scrollY * 0.035}px)`;
-
-                        background.style.transform =
-                            `scale(1.04) translateY(${scrollY * 0.015}px)`;
-
-                    }
-
-
-                    ticking = false;
-
-                }
+            clearTimeout(
+                resizeTimer
             );
 
 
-            ticking = true;
+            resizeTimer =
+                setTimeout(
+                    () => {
 
-        },
-        {
-            passive: true
+                        createParticles();
+
+                    },
+                    250
+                );
+
         }
     );
 
-}
+
+    /* =====================================================
+       PREVENT BROKEN RESUME BUTTON
+       ===================================================== */
+
+    const resumeButton =
+        document.querySelector(
+            ".resume-button"
+        );
 
 
+    if (resumeButton) {
 
-/* =========================================================
-   SMOOTH LINKS
-========================================================= */
+        resumeButton.addEventListener(
+            "click",
+            () => {
 
-function initializeSmoothLinks() {
+                /*
+                 * The browser handles the PDF download.
+                 * This listener intentionally does not
+                 * override the default behavior.
+                 */
 
-    document
-        .querySelectorAll(
-            'a[href^="#"]'
-        )
-        .forEach(
-            link => {
+            }
+        );
 
-                link.addEventListener(
-                    "click",
-                    event => {
-
-                        const targetId =
-                            link.getAttribute(
-                                "href"
-                            );
+    }
 
 
-                        if (
-                            !targetId ||
-                            targetId === "#"
-                        ) {
-                            return;
-                        }
+    /* =====================================================
+       INITIAL NAV STATE
+       ===================================================== */
 
+    if (
+        window.scrollY <
+        80
+    ) {
 
-                        const target =
-                            document.querySelector(
-                                targetId
-                            );
+        navLinks.forEach(
+            (link) => {
 
-
-                        if (!target) {
-                            return;
-                        }
-
-
-                        event.preventDefault();
-
-
-                        const headerHeight =
-                            document.querySelector(
-                                ".site-header"
-                            )?.offsetHeight ||
-                            64;
-
-
-                        const position =
-                            target.getBoundingClientRect()
-                                .top +
-                            window.scrollY -
-                            headerHeight -
-                            10;
-
-
-                        window.scrollTo(
-                            {
-                                top:
-                                    position,
-
-                                behavior:
-                                    "smooth"
-                            }
-                        );
-
-                    }
+                link.classList.remove(
+                    "active"
                 );
 
             }
         );
 
-}
 
-
-
-/* =========================================================
-   BUTTON HOVER EFFECT
-========================================================= */
-
-document.addEventListener(
-    "pointermove",
-    event => {
-
-        const cards =
-            document.querySelectorAll(
-                ".skill-card, .experience-card"
+        const homeLink =
+            document.querySelector(
+                '.desktop-nav a[href="#home"]'
             );
 
 
-        cards.forEach(
-            card => {
+        if (homeLink) {
 
-                const rect =
-                    card.getBoundingClientRect();
+            homeLink.classList.add(
+                "active"
+            );
 
-
-                const x =
-                    event.clientX -
-                    rect.left;
-
-
-                const y =
-                    event.clientY -
-                    rect.top;
-
-
-                if (
-                    x >= 0 &&
-                    x <= rect.width &&
-                    y >= 0 &&
-                    y <= rect.height
-                ) {
-
-                    card.style.setProperty(
-                        "--mouse-x",
-                        `${x}px`
-                    );
-
-                    card.style.setProperty(
-                        "--mouse-y",
-                        `${y}px`
-                    );
-
-                }
-
-            }
-        );
+        }
 
     }
-);
 
-
-
-/* =========================================================
-   CURRENT YEAR
-========================================================= */
-
-const yearElements =
-    document.querySelectorAll(
-        "[data-current-year]"
-    );
-
-
-yearElements.forEach(
-    element => {
-
-        element.textContent =
-            new Date().getFullYear();
-
-    }
-);
+});
