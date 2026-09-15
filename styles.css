@@ -2922,6 +2922,9 @@ img {
             blur(15px);
 
     }
+   .hero-shade {
+     width: 100%;
+    left: 0;
 
     .mobile-nav.open {
 
