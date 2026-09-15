@@ -636,7 +636,8 @@ img {
         none;
 
       background: radial-gradient(ellipse at center, rgb(1 8 17 / 58%) 0%, rgb(1 8 17 / 54%) 30%, transparent 65%);
-
+    width: 50%;
+    left: -60px;
 
 }
 
@@ -2973,28 +2974,9 @@ img {
 
     }
 
-    .hero-copy::before {
-
-        left:
-            -100px;
-
-        right:
-            -100px;
-
-        top:
-            0;
-
-        bottom:
-            -40px;
-
-        background:
-            linear-gradient(
-                180deg,
-                rgba(1, 8, 17, 0.72),
-                rgba(1, 8, 17, 0.44),
-                transparent
-            );
-
+    .hero-shade {
+       width:100%;
+       left:0;
     }
 
     .hero-text {
