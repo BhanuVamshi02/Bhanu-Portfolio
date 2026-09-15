@@ -1,794 +1,1105 @@
 /* =========================================================
-   BHANU VAMSHI PORTFOLIO
-   script.js
-   ========================================================= */
+   RESET
+========================================================= */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family:
+    Inter,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+
+  background: #050505;
+  color: #ffffff;
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+.container {
+  width: min(1180px, calc(100% - 48px));
+  margin: 0 auto;
+}
 
 
 /* =========================================================
-   DOM READY
-   ========================================================= */
+   HEADER
+========================================================= */
 
-document.addEventListener("DOMContentLoaded", () => {
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
 
+  padding: 22px 0;
 
-    /* =====================================================
-       ELEMENTS
-       ===================================================== */
+  background: rgba(4, 4, 4, 0.35);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 
-    const hero =
-        document.querySelector(".hero");
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
 
-    const topbar =
-        document.querySelector(".topbar");
+.nav-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+}
 
-    const menuButton =
-        document.getElementById("menuButton");
+.logo {
+  width: 44px;
+  height: 44px;
 
-    const mobileNav =
-        document.getElementById("mobileNav");
+  display: grid;
+  place-items: center;
 
-    const themeToggle =
-        document.getElementById("themeToggle");
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 50%;
 
-    const contactForm =
-        document.getElementById("contactForm");
+  font-size: 14px;
+  font-weight: 800;
 
-    const formStatus =
-        document.getElementById("formStatus");
+  letter-spacing: 1px;
 
-    const yearElement =
-        document.getElementById("year");
+  transition: 0.3s ease;
+}
 
-    const navLinks =
-        document.querySelectorAll(
-            ".desktop-nav .nav-link"
-        );
+.logo:hover {
+  transform: rotate(8deg) scale(1.05);
+  background: rgba(255, 255, 255, 0.08);
+}
 
-    const mobileLinks =
-        document.querySelectorAll(
-            ".mobile-nav a"
-        );
+.nav-menu {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
 
+.nav-menu a {
+  position: relative;
 
-    /* =====================================================
-       YEAR
-       ===================================================== */
+  color: rgba(255, 255, 255, 0.72);
 
-    if (yearElement) {
+  font-size: 13px;
+  font-weight: 600;
 
-        yearElement.textContent =
-            new Date().getFullYear();
+  transition: 0.3s ease;
+}
 
-    }
+.nav-menu a::after {
+  content: "";
 
+  position: absolute;
 
-    /* =====================================================
-       HERO SCROLL OVERLAY
-       
-       IMPORTANT BEHAVIOR:
+  left: 0;
+  bottom: -8px;
 
-       At top:
-           .hero.scrolled is REMOVED
-           background-overlay = opacity 0
+  width: 0;
+  height: 1px;
 
-       After scrolling:
-           .hero.scrolled is ADDED
-           background-overlay = opacity 1
-       ===================================================== */
+  background: #ffffff;
 
-    function updateHeroScrollState() {
+  transition: width 0.3s ease;
+}
 
-        if (!hero) {
-            return;
-        }
+.nav-menu a:hover,
+.nav-menu a.active {
+  color: #ffffff;
+}
 
-        const scrollPosition =
-            window.scrollY;
+.nav-menu a:hover::after,
+.nav-menu a.active::after {
+  width: 100%;
+}
 
-        const scrollThreshold =
-            80;
+.nav-button {
+  padding: 10px 18px;
 
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 30px;
 
-        if (
-            scrollPosition >
-            scrollThreshold
-        ) {
+  font-size: 12px;
+  font-weight: 700;
 
-            hero.classList.add(
-                "scrolled"
-            );
+  transition: 0.3s ease;
+}
 
-        } else {
-
-            hero.classList.remove(
-                "scrolled"
-            );
-
-        }
-
-
-        /* Header subtle scroll effect */
-
-        if (topbar) {
-
-            if (
-                scrollPosition >
-                30
-            ) {
-
-                topbar.classList.add(
-                    "is-scrolled"
-                );
-
-            } else {
-
-                topbar.classList.remove(
-                    "is-scrolled"
-                );
-
-            }
-
-        }
-
-    }
+.nav-button:hover {
+  background: #ffffff;
+  color: #050505;
+}
 
 
-    /* Run immediately */
+/* =========================================================
+   HERO
+========================================================= */
 
-    updateHeroScrollState();
+.hero {
+  position: relative;
 
+  min-height: 100vh;
 
-    /* Run during scroll */
+  display: flex;
+  align-items: center;
 
-    window.addEventListener(
-        "scroll",
-        updateHeroScrollState,
-        {
-            passive: true
-        }
+  background-image: url("anime-background.jpg");
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+
+  overflow: hidden;
+}
+
+/*
+   IMPORTANT:
+   No dark overlay is placed over the hero.
+   The anime background stays clear.
+*/
+
+.hero::before,
+.hero::after {
+  content: none;
+}
+
+.hero-inner {
+  position: relative;
+  z-index: 2;
+
+  min-height: 100vh;
+
+  display: flex;
+  align-items: center;
+}
+
+.hero-text {
+  position: relative;
+
+  width: min(650px, 100%);
+
+  padding: 42px 48px 42px 0;
+
+  z-index: 3;
+}
+
+/*
+   Shading belongs ONLY behind the left-side text.
+*/
+
+.hero-text::before {
+  content: "";
+
+  position: absolute;
+
+  left: -180px;
+  top: -80px;
+
+  width: 850px;
+  height: 620px;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0.78) 0%,
+      rgba(0, 0, 0, 0.60) 45%,
+      rgba(0, 0, 0, 0.22) 75%,
+      rgba(0, 0, 0, 0) 100%
     );
 
+  z-index: -1;
 
-    /* =====================================================
-       MOBILE MENU
-       ===================================================== */
+  pointer-events: none;
+}
 
-    function closeMobileMenu() {
+.hero-eyebrow {
+  margin-bottom: 18px;
 
-        if (!mobileNav) {
-            return;
-        }
+  font-size: 12px;
+  font-weight: 800;
 
-        mobileNav.classList.remove(
-            "open"
-        );
+  letter-spacing: 3px;
 
-        if (menuButton) {
+  color: rgba(255, 255, 255, 0.68);
+}
 
-            menuButton.setAttribute(
-                "aria-expanded",
-                "false"
-            );
+.hero h1 {
+  font-size: clamp(48px, 7vw, 86px);
 
-        }
+  line-height: 0.98;
 
-    }
+  font-weight: 800;
+
+  letter-spacing: -4px;
+
+  margin-bottom: 22px;
+}
+
+.hero h1 span {
+  display: block;
+}
+
+.hero h2 {
+  font-size: clamp(22px, 3vw, 34px);
+
+  line-height: 1.2;
+
+  font-weight: 500;
+
+  color: rgba(255, 255, 255, 0.84);
+
+  margin-bottom: 24px;
+}
+
+.hero-description {
+  max-width: 610px;
+
+  font-size: 17px;
+  line-height: 1.8;
+
+  color: rgba(255, 255, 255, 0.78);
+
+  margin-bottom: 34px;
+}
+
+.hero-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+
+  margin-bottom: 30px;
+}
+
+.btn {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  min-height: 48px;
+
+  padding: 0 24px;
+
+  border-radius: 30px;
+
+  font-size: 13px;
+  font-weight: 800;
+
+  transition:
+    transform 0.3s ease,
+    background 0.3s ease,
+    color 0.3s ease,
+    border-color 0.3s ease;
+}
+
+.btn:hover {
+  transform: translateY(-3px);
+}
+
+.btn-primary {
+  background: #ffffff;
+  color: #050505;
+}
+
+.btn-primary:hover {
+  background: rgba(255, 255, 255, 0.82);
+}
+
+.btn-secondary {
+  border: 1px solid rgba(255, 255, 255, 0.38);
+  color: #ffffff;
+
+  background: rgba(0, 0, 0, 0.16);
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.social-links {
+  display: flex;
+  gap: 24px;
+}
+
+.social-links a {
+  font-size: 13px;
+  font-weight: 600;
+
+  color: rgba(255, 255, 255, 0.62);
+
+  transition: 0.3s ease;
+}
+
+.social-links a:hover {
+  color: #ffffff;
+  transform: translateY(-2px);
+}
 
 
-    if (menuButton && mobileNav) {
+/* =========================================================
+   LOWER PAGE
+========================================================= */
 
-        menuButton.addEventListener(
-            "click",
-            () => {
+.lower-page {
+  position: relative;
 
-                const isOpen =
-                    mobileNav.classList.toggle(
-                        "open"
-                    );
+  background: #050505;
 
-                menuButton.setAttribute(
-                    "aria-expanded",
-                    String(isOpen)
-                );
+  overflow: hidden;
+}
 
-            }
-        );
+/*
+   This is where the fade starts.
+   It does NOT darken the hero.
+*/
 
-    }
+.background-overlay {
+  position: absolute;
 
+  left: 0;
+  right: 0;
 
-    /* Close mobile menu after selecting link */
+  top: -280px;
+  bottom: 0;
 
-    mobileLinks.forEach(
-        (link) => {
+  z-index: 0;
 
-            link.addEventListener(
-                "click",
-                () => {
+  pointer-events: none;
 
-                    closeMobileMenu();
-
-                }
-            );
-
-        }
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(5, 5, 5, 0) 0%,
+      rgba(5, 5, 5, 0.04) 7%,
+      rgba(5, 5, 5, 0.20) 17%,
+      rgba(5, 5, 5, 0.60) 30%,
+      rgba(5, 5, 5, 0.92) 43%,
+      #050505 55%
     );
+}
 
 
-    /* Close menu when clicking outside */
+/* =========================================================
+   STATS
+========================================================= */
 
-    document.addEventListener(
-        "click",
-        (event) => {
+.stats {
+  position: relative;
+  z-index: 2;
 
-            if (
-                !mobileNav ||
-                !menuButton
-            ) {
-                return;
-            }
+  padding: 90px 0 110px;
+}
 
-            const clickedInsideMenu =
-                mobileNav.contains(
-                    event.target
-                );
+.stats-grid {
+  display: grid;
 
-            const clickedMenuButton =
-                menuButton.contains(
-                    event.target
-                );
+  grid-template-columns:
+    repeat(4, 1fr);
 
-            if (
-                !clickedInsideMenu &&
-                !clickedMenuButton
-            ) {
+  gap: 18px;
+}
 
-                closeMobileMenu();
+.stat-card {
+  padding: 30px 24px;
 
-            }
+  border-top: 1px solid rgba(255, 255, 255, 0.22);
 
-        }
-    );
+  background: rgba(255, 255, 255, 0.025);
 
+  transition: 0.3s ease;
+}
 
-    /* =====================================================
-       ESC KEY CLOSES MOBILE MENU
-       ===================================================== */
+.stat-card:hover {
+  transform: translateY(-5px);
 
-    document.addEventListener(
-        "keydown",
-        (event) => {
+  background: rgba(255, 255, 255, 0.05);
+}
 
-            if (
-                event.key === "Escape"
-            ) {
+.stat-card strong {
+  display: block;
 
-                closeMobileMenu();
+  font-size: 29px;
+  line-height: 1.2;
 
-            }
+  margin-bottom: 8px;
+}
 
-        }
-    );
+.stat-card span {
+  font-size: 13px;
 
+  color: rgba(255, 255, 255, 0.55);
+}
 
-    /* =====================================================
-       THEME TOGGLE
-       ===================================================== */
 
-    const savedTheme =
-        localStorage.getItem(
-            "bhanu-theme"
-        );
+/* =========================================================
+   GENERAL CONTENT
+========================================================= */
 
+.content-section {
+  position: relative;
+  z-index: 2;
 
-    if (
-        savedTheme === "light"
-    ) {
+  padding: 130px 0;
+}
 
-        document.body.classList.add(
-            "light"
-        );
+.content-grid {
+  display: grid;
 
-    }
+  grid-template-columns: 190px 1fr;
 
+  gap: 80px;
+}
 
-    if (themeToggle) {
+.section-label {
+  align-self: start;
 
-        themeToggle.addEventListener(
-            "click",
-            () => {
+  position: sticky;
+  top: 120px;
 
-                document.body.classList.toggle(
-                    "light"
-                );
+  font-size: 11px;
+  font-weight: 800;
 
+  letter-spacing: 2px;
 
-                const isLight =
-                    document.body.classList.contains(
-                        "light"
-                    );
+  color: rgba(255, 255, 255, 0.42);
+}
 
+.section-label span {
+  display: block;
 
-                localStorage.setItem(
-                    "bhanu-theme",
-                    isLight
-                        ? "light"
-                        : "dark"
-                );
+  margin-bottom: 8px;
 
-            }
-        );
+  font-size: 12px;
 
-    }
+  color: rgba(255, 255, 255, 0.8);
+}
 
+.section-content {
+  max-width: 850px;
+}
 
-    /* =====================================================
-       ACTIVE NAVIGATION
-       ===================================================== */
+.section-content h2 {
+  font-size: clamp(38px, 5vw, 64px);
 
-    const sections =
-        document.querySelectorAll(
-            "main section[id]"
-        );
+  line-height: 1.08;
 
+  letter-spacing: -2.5px;
 
-    const sectionObserver =
-        new IntersectionObserver(
-            (entries) => {
+  margin-bottom: 38px;
 
-                entries.forEach(
-                    (entry) => {
+  font-weight: 800;
+}
 
-                        if (
-                            entry.isIntersecting
-                        ) {
+.section-content h2 span,
+.contact-content h2 span {
+  display: block;
 
-                            const id =
-                                entry.target.id;
+  color: rgba(255, 255, 255, 0.42);
+}
 
 
-                            navLinks.forEach(
-                                (link) => {
+/*
+   INCREASED TEXT SIZE AFTER STATS
+*/
 
-                                    link.classList.remove(
-                                        "active"
-                                    );
+.section-content p {
+  font-size: 18px;
 
+  line-height: 1.9;
 
-                                    if (
-                                        link.getAttribute(
-                                            "href"
-                                        ) ===
-                                        `#${id}`
-                                    ) {
+  color: rgba(255, 255, 255, 0.68);
 
-                                        link.classList.add(
-                                            "active"
-                                        );
+  margin-bottom: 24px;
+}
 
-                                    }
+.section-content p.large-text {
+  font-size: 22px;
 
-                                }
-                            );
+  line-height: 1.8;
 
-                        }
+  color: rgba(255, 255, 255, 0.88);
 
-                    }
-                );
+  margin-bottom: 30px;
+}
 
-            },
-            {
-                rootMargin:
-                    "-35% 0px -55% 0px",
 
-                threshold:
-                    0
-            }
-        );
+/* =========================================================
+   EXPERIENCE
+========================================================= */
 
+.experience-item {
+  padding: 38px 0;
 
-    sections.forEach(
-        (section) => {
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
 
-            sectionObserver.observe(
-                section
-            );
+.experience-item:last-child {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
 
-        }
-    );
+.experience-top {
+  display: flex;
 
+  justify-content: space-between;
+  align-items: flex-start;
 
-    /* =====================================================
-       SMOOTH NAVIGATION
-       ===================================================== */
+  gap: 30px;
 
-    document.querySelectorAll(
-        'a[href^="#"]'
-    ).forEach(
-        (link) => {
+  margin-bottom: 20px;
+}
 
-            link.addEventListener(
-                "click",
-                (event) => {
+.experience-item h3 {
+  font-size: 25px;
 
-                    const targetId =
-                        link.getAttribute(
-                            "href"
-                        );
+  line-height: 1.3;
 
+  margin-bottom: 6px;
+}
 
-                    if (
-                        !targetId ||
-                        targetId === "#"
-                    ) {
-                        return;
-                    }
+.company {
+  font-size: 15px !important;
 
+  color: rgba(255, 255, 255, 0.45) !important;
 
-                    const target =
-                        document.querySelector(
-                            targetId
-                        );
+  margin: 0 !important;
+}
 
+.experience-date {
+  white-space: nowrap;
 
-                    if (!target) {
-                        return;
-                    }
+  font-size: 14px;
 
+  color: rgba(255, 255, 255, 0.45);
+}
 
-                    event.preventDefault();
+.experience-item p {
+  margin-bottom: 15px;
+}
 
 
-                    target.scrollIntoView({
-                        behavior:
-                            "smooth",
+/* =========================================================
+   SKILLS
+========================================================= */
 
-                        block:
-                            "start"
-                    });
+.skills-group {
+  padding: 30px 0;
 
-                }
-            );
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
 
-        }
-    );
+.skills-group:last-child {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
 
+.skills-group h3 {
+  font-size: 20px;
 
-    /* =====================================================
-       REVEAL ANIMATIONS
-       ===================================================== */
+  margin-bottom: 20px;
+}
 
-    const revealElements =
-        document.querySelectorAll(
-            ".about-panel, " +
-            ".skills-preview, " +
-            ".experience-item, " +
-            ".skill-card, " +
-            ".services-panel, " +
-            ".education-panel, " +
-            ".contact-panel, " +
-            ".stats"
-        );
+.skill-list {
+  display: flex;
 
+  flex-wrap: wrap;
 
-    const revealObserver =
-        new IntersectionObserver(
-            (entries, observer) => {
+  gap: 10px;
+}
 
-                entries.forEach(
-                    (entry) => {
+.skill-list span {
+  padding: 10px 16px;
 
-                        if (
-                            entry.isIntersecting
-                        ) {
+  border: 1px solid rgba(255, 255, 255, 0.14);
 
-                            entry.target.classList.add(
-                                "visible"
-                            );
+  border-radius: 30px;
 
+  background: rgba(255, 255, 255, 0.025);
 
-                            observer.unobserve(
-                                entry.target
-                            );
+  font-size: 14px;
 
-                        }
+  color: rgba(255, 255, 255, 0.72);
 
-                    }
-                );
+  transition: 0.3s ease;
+}
 
-            },
-            {
-                threshold:
-                    0.12
-            }
-        );
+.skill-list span:hover {
+  background: rgba(255, 255, 255, 0.08);
 
+  color: #ffffff;
 
-    revealElements.forEach(
-        (element) => {
+  transform: translateY(-2px);
+}
 
-            element.classList.add(
-                "reveal"
-            );
 
-            revealObserver.observe(
-                element
-            );
+/* =========================================================
+   EDUCATION
+========================================================= */
 
-        }
-    );
+.education-item {
+  display: flex;
 
+  justify-content: space-between;
 
-    /* =====================================================
-       CONTACT FORM
-       
-       Since there is no backend configured, this does NOT
-       pretend to send an email.
+  gap: 30px;
 
-       It opens the user's email client using mailto.
-       ===================================================== */
+  padding: 28px 0;
 
-    if (contactForm) {
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
 
-        contactForm.addEventListener(
-            "submit",
-            (event) => {
+.education-item:last-of-type {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
 
-                event.preventDefault();
+.education-item h3 {
+  font-size: 22px;
 
+  margin-bottom: 5px;
+}
 
-                const name =
-                    document
-                        .getElementById("name")
-                        ?.value
-                        .trim();
+.education-item p {
+  margin: 0 !important;
 
+  font-size: 16px !important;
+}
 
-                const email =
-                    document
-                        .getElementById("email")
-                        ?.value
-                        .trim();
+.education-item > span {
+  white-space: nowrap;
 
+  color: rgba(255, 255, 255, 0.45);
 
-                const subject =
-                    document
-                        .getElementById("subject")
-                        ?.value
-                        .trim();
+  font-size: 14px;
+}
 
+.certifications {
+  padding-top: 45px;
+}
 
-                const message =
-                    document
-                        .getElementById("message")
-                        ?.value
-                        .trim();
+.certifications h3 {
+  font-size: 21px;
 
+  margin-bottom: 20px;
+}
 
-                if (
-                    !name ||
-                    !email ||
-                    !subject ||
-                    !message
-                ) {
+.certifications ul {
+  padding-left: 20px;
+}
 
-                    if (formStatus) {
+.certifications li {
+  margin-bottom: 14px;
 
-                        formStatus.textContent =
-                            "Please complete all fields.";
+  font-size: 17px;
 
-                    }
+  line-height: 1.7;
 
-                    return;
+  color: rgba(255, 255, 255, 0.68);
+}
 
-                }
 
+/* =========================================================
+   CONTACT
+========================================================= */
 
-                const mailSubject =
-                    encodeURIComponent(
-                        subject
-                    );
+.contact-section {
+  position: relative;
+  z-index: 2;
 
+  padding: 160px 0 130px;
+}
 
-                const mailBody =
-                    encodeURIComponent(
-                        `Hello Bhanu,
+.contact-content {
+  max-width: 900px;
+}
 
-Name: ${name}
-Email: ${email}
+.contact-content h2 {
+  font-size: clamp(48px, 7vw, 84px);
 
-${message}`
-                    );
+  line-height: 1;
 
+  letter-spacing: -4px;
 
-                const mailtoUrl =
-                    `mailto:bhanuvamshi0211@gmail.com` +
-                    `?subject=${mailSubject}` +
-                    `&body=${mailBody}`;
+  margin-bottom: 35px;
+}
 
+.contact-content > p:not(.hero-eyebrow) {
+  max-width: 700px;
 
-                if (formStatus) {
+  font-size: 20px;
 
-                    formStatus.textContent =
-                        "Opening your email client...";
+  line-height: 1.8;
 
-                }
+  color: rgba(255, 255, 255, 0.65);
 
+  margin-bottom: 45px;
+}
 
-                window.location.href =
-                    mailtoUrl;
+.contact-details {
+  display: grid;
 
-            }
-        );
+  grid-template-columns:
+    repeat(3, 1fr);
 
-    }
+  gap: 20px;
 
+  margin-bottom: 45px;
+}
 
-    /* =====================================================
-       PARTICLES
-       ===================================================== */
+.contact-details a,
+.contact-details > div {
+  display: flex;
 
-    const particleContainer =
-        document.getElementById(
-            "particles"
-        );
+  flex-direction: column;
 
+  gap: 5px;
 
-    function createParticles() {
+  padding: 25px;
 
-        if (
-            !particleContainer
-        ) {
-            return;
-        }
+  border: 1px solid rgba(255, 255, 255, 0.1);
 
+  background: rgba(255, 255, 255, 0.025);
 
-        const particleCount =
-            window.innerWidth < 600
-                ? 12
-                : 24;
+  transition: 0.3s ease;
+}
 
+.contact-details a:hover {
+  background: rgba(255, 255, 255, 0.07);
 
-        particleContainer.innerHTML =
-            "";
+  transform: translateY(-3px);
+}
 
+.contact-details strong {
+  font-size: 13px;
 
-        for (
-            let i = 0;
-            i < particleCount;
-            i++
-        ) {
+  letter-spacing: 1px;
 
-            const particle =
-                document.createElement(
-                    "span"
-                );
+  text-transform: uppercase;
 
+  color: rgba(255, 255, 255, 0.45);
+}
 
-            particle.className =
-                "particle";
+.contact-details span {
+  font-size: 16px;
 
+  color: rgba(255, 255, 255, 0.82);
 
-            particle.style.left =
-                `${Math.random() * 100}%`;
+  word-break: break-word;
+}
 
+.contact-button {
+  min-width: 150px;
+}
 
-            particle.style.top =
-                `${Math.random() * 100}%`;
 
+/* =========================================================
+   FOOTER
+========================================================= */
 
-            particle.style.animationDelay =
-                `${Math.random() * 6}s`;
+footer {
+  position: relative;
+  z-index: 2;
 
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
 
-            particle.style.animationDuration =
-                `${5 + Math.random() * 5}s`;
+  padding: 28px 0;
+}
 
+.footer-content {
+  display: flex;
 
-            particleContainer.appendChild(
-                particle
-            );
+  justify-content: space-between;
+  align-items: center;
 
-        }
+  gap: 20px;
+}
 
-    }
+.footer-content p,
+.footer-content a {
+  font-size: 13px;
 
+  color: rgba(255, 255, 255, 0.42);
+}
 
-    createParticles();
+.footer-content a:hover {
+  color: #ffffff;
+}
 
 
-    /* =====================================================
-       RESIZE PARTICLES
-       ===================================================== */
+/* =========================================================
+   REVEAL ANIMATION
+========================================================= */
 
-    let resizeTimer;
+.reveal-element {
+  opacity: 0;
 
+  transform: translateY(35px);
 
-    window.addEventListener(
-        "resize",
-        () => {
+  transition:
+    opacity 0.8s ease,
+    transform 0.8s ease;
+}
 
-            clearTimeout(
-                resizeTimer
-            );
+.reveal-element.visible {
+  opacity: 1;
 
+  transform: translateY(0);
+}
 
-            resizeTimer =
-                setTimeout(
-                    () => {
 
-                        createParticles();
+/* =========================================================
+   RESPONSIVE — TABLET
+========================================================= */
 
-                    },
-                    250
-                );
+@media (max-width: 900px) {
 
-        }
-    );
+  .nav-menu {
+    gap: 17px;
+  }
 
+  .nav-menu a {
+    font-size: 12px;
+  }
 
-    /* =====================================================
-       PREVENT BROKEN RESUME BUTTON
-       ===================================================== */
+  .nav-button {
+    display: none;
+  }
 
-    const resumeButton =
-        document.querySelector(
-            ".resume-button"
-        );
+  .hero {
+    background-position: 60% center;
+  }
 
+  .hero-text {
+    padding-right: 0;
+  }
 
-    if (resumeButton) {
+  .stats-grid {
+    grid-template-columns:
+      repeat(2, 1fr);
+  }
 
-        resumeButton.addEventListener(
-            "click",
-            () => {
+  .content-grid {
+    grid-template-columns: 1fr;
 
-                /*
-                 * The browser handles the PDF download.
-                 * This listener intentionally does not
-                 * override the default behavior.
-                 */
+    gap: 35px;
+  }
 
-            }
-        );
+  .section-label {
+    position: static;
+  }
 
-    }
+  .contact-details {
+    grid-template-columns: 1fr;
+  }
+}
 
 
-    /* =====================================================
-       INITIAL NAV STATE
-       ===================================================== */
+/* =========================================================
+   RESPONSIVE — MOBILE
+========================================================= */
 
-    if (
-        window.scrollY <
-        80
-    ) {
+@media (max-width: 650px) {
 
-        navLinks.forEach(
-            (link) => {
+  .container {
+    width: min(100% - 32px, 1180px);
+  }
 
-                link.classList.remove(
-                    "active"
-                );
+  .site-header {
+    padding: 14px 0;
+  }
 
-            }
-        );
+  .nav-container {
+    justify-content: center;
+  }
 
+  .logo {
+    display: none;
+  }
 
-        const homeLink =
-            document.querySelector(
-                '.desktop-nav a[href="#home"]'
-            );
+  .nav-menu {
+    gap: 16px;
 
+    overflow-x: auto;
 
-        if (homeLink) {
+    width: 100%;
 
-            homeLink.classList.add(
-                "active"
-            );
+    justify-content: flex-start;
 
-        }
+    padding-bottom: 3px;
 
-    }
+    scrollbar-width: none;
+  }
 
-});
+  .nav-menu::-webkit-scrollbar {
+    display: none;
+  }
+
+  .nav-menu a {
+    white-space: nowrap;
+  }
+
+  .hero {
+    min-height: 100svh;
+
+    background-position: 62% center;
+  }
+
+  .hero-inner {
+    min-height: 100svh;
+
+    align-items: flex-end;
+
+    padding-bottom: 70px;
+  }
+
+  .hero-text {
+    padding: 30px 0;
+  }
+
+  .hero-text::before {
+    left: -100px;
+    top: -60px;
+
+    width: 600px;
+    height: 600px;
+
+    background:
+      linear-gradient(
+        90deg,
+        rgba(0, 0, 0, 0.82) 0%,
+        rgba(0, 0, 0, 0.65) 55%,
+        rgba(0, 0, 0, 0) 100%
+      );
+  }
+
+  .hero h1 {
+    font-size: clamp(45px, 14vw, 70px);
+
+    letter-spacing: -3px;
+  }
+
+  .hero h2 {
+    font-size: 23px;
+  }
+
+  .hero-description {
+    font-size: 16px;
+
+    line-height: 1.7;
+  }
+
+  .hero-buttons {
+    flex-direction: column;
+
+    align-items: stretch;
+  }
+
+  .btn {
+    width: 100%;
+  }
+
+  .stats {
+    padding: 60px 0 80px;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr;
+
+    gap: 12px;
+  }
+
+  .stat-card {
+    padding: 25px 20px;
+  }
+
+  .content-section {
+    padding: 90px 0;
+  }
+
+  .section-content h2 {
+    font-size: 40px;
+
+    letter-spacing: -2px;
+  }
+
+  /*
+     Bigger readable body text on mobile too.
+  */
+
+  .section-content p {
+    font-size: 17px;
+
+    line-height: 1.85;
+  }
+
+  .section-content p.large-text {
+    font-size: 20px;
+
+    line-height: 1.75;
+  }
+
+  .experience-top {
+    flex-direction: column;
+
+    gap: 8px;
+  }
+
+  .experience-item h3 {
+    font-size: 22px;
+  }
+
+  .experience-date {
+    font-size: 13px;
+  }
+
+  .education-item {
+    flex-direction: column;
+
+    gap: 7px;
+  }
+
+  .contact-section {
+    padding: 100px 0 90px;
+  }
+
+  .contact-content h2 {
+    font-size: 50px;
+
+    letter-spacing: -3px;
+  }
+
+  .contact-content > p:not(.hero-eyebrow) {
+    font-size: 18px;
+  }
+
+  .footer-content {
+    flex-direction: column;
+
+    align-items: flex-start;
+  }
+
+}
