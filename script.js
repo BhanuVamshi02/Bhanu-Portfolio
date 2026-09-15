@@ -1,323 +1,92 @@
-/* ==========================================
-   BHANU VAMSHI PORTFOLIO
-   ========================================== */
+const $ = (selector) => document.querySelector(selector);
+const $$ = (selector) => document.querySelectorAll(selector);
 
+const menuBtn = $("#menuBtn");
+const mobileNav = $("#mobileNav");
+const themeToggle = $("#themeToggle");
 
-/* ================= MOBILE MENU ================= */
-
-const menuToggle =
-    document.getElementById("menuToggle");
-
-const navbar =
-    document.getElementById("navbar");
-
-
-if (menuToggle && navbar) {
-
-    menuToggle.addEventListener("click", () => {
-
-        const isOpen =
-            navbar.classList.toggle("open");
-
-        menuToggle.setAttribute(
-            "aria-expanded",
-            isOpen
-        );
-
-    });
-
-
-    /* Close menu when clicking a link */
-
-    document
-        .querySelectorAll(".nav-link")
-        .forEach(link => {
-
-            link.addEventListener("click", () => {
-
-                navbar.classList.remove("open");
-
-                menuToggle.setAttribute(
-                    "aria-expanded",
-                    "false"
-                );
-
-            });
-
-        });
-
-}
-
-
-/* ================= ACTIVE NAVIGATION ================= */
-
-const sections =
-    document.querySelectorAll("section[id]");
-
-const navLinks =
-    document.querySelectorAll(".nav-link");
-
-
-const navObserver =
-    new IntersectionObserver(
-
-        entries => {
-
-            entries.forEach(entry => {
-
-                if (entry.isIntersecting) {
-
-                    navLinks.forEach(link => {
-
-                        link.classList.remove("active");
-
-                    });
-
-
-                    const current =
-                        document.querySelector(
-                            `.nav-link[href="#${entry.target.id}"]`
-                        );
-
-
-                    if (current) {
-
-                        current.classList.add("active");
-
-                    }
-
-                }
-
-            });
-
-        },
-
-        {
-            threshold: 0.35
-        }
-
-    );
-
-
-sections.forEach(section => {
-
-    navObserver.observe(section);
-
+menuBtn?.addEventListener("click", () => {
+  const open = mobileNav.classList.toggle("open");
+  menuBtn.setAttribute("aria-expanded", String(open));
+  menuBtn.textContent = open ? "×" : "☰";
 });
 
-
-/* ================= SCROLL ANIMATION ================= */
-
-const revealElements =
-    document.querySelectorAll(".reveal");
-
-
-const revealObserver =
-    new IntersectionObserver(
-
-        entries => {
-
-            entries.forEach(entry => {
-
-                if (entry.isIntersecting) {
-
-                    entry.target.classList.add("visible");
-
-                    /*
-                     * Stop observing once the
-                     * animation has happened.
-                     */
-
-                    revealObserver.unobserve(
-                        entry.target
-                    );
-
-                }
-
-            });
-
-        },
-
-        {
-            threshold: 0.15
-        }
-
-    );
-
-
-revealElements.forEach(element => {
-
-    revealObserver.observe(element);
-
+$$(".mobile-nav a").forEach(link => {
+  link.addEventListener("click", () => {
+    mobileNav.classList.remove("open");
+    menuBtn.setAttribute("aria-expanded", "false");
+    menuBtn.textContent = "☰";
+  });
 });
 
+const savedTheme = localStorage.getItem("bhanu-theme");
+if (savedTheme === "light") document.documentElement.dataset.theme = "light";
 
-/* ================= THEME ================= */
+themeToggle?.addEventListener("click", () => {
+  const light = document.documentElement.dataset.theme === "light";
+  document.documentElement.dataset.theme = light ? "dark" : "light";
+  localStorage.setItem("bhanu-theme", light ? "dark" : "light");
+  themeToggle.textContent = light ? "☼" : "☾";
+});
 
-const themeButton =
-    document.getElementById("themeBtn");
+themeToggle.textContent =
+  document.documentElement.dataset.theme === "light" ? "☾" : "☼";
 
+const sections = [...$$("main section[id]")];
+const navLinks = [...$$(".nav-link")];
 
-if (themeButton) {
-
-    themeButton.addEventListener("click", () => {
-
-        document.body.classList.toggle(
-            "light-mode"
-        );
-
-        const isLight =
-            document.body.classList.contains(
-                "light-mode"
-            );
-
-        localStorage.setItem(
-            "portfolio-theme",
-            isLight ? "light" : "dark"
-        );
-
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (!entry.isIntersecting) return;
+    navLinks.forEach(link => {
+      link.classList.toggle("active", link.getAttribute("href") === `#${entry.target.id}`);
     });
+  });
+}, { rootMargin: "-35% 0px -55% 0px" });
 
+sections.forEach(section => observer.observe(section));
 
-    /*
-     * Restore previous theme.
-     */
-
-    const savedTheme =
-        localStorage.getItem(
-            "portfolio-theme"
-        );
-
-
-    if (savedTheme === "light") {
-
-        document.body.classList.add(
-            "light-mode"
-        );
-
+const revealObserver = new IntersectionObserver((entries, obs) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add("visible");
+      obs.unobserve(entry.target);
     }
+  });
+}, { threshold: 0.12 });
 
-}
+$$(".reveal").forEach(el => revealObserver.observe(el));
 
+const heroCharacter = $(".hero-character");
+const heroVisual = $(".hero-visual");
 
-/* ================= YEAR ================= */
+heroVisual?.addEventListener("mousemove", (event) => {
+  if (window.innerWidth < 821) return;
+  const rect = heroVisual.getBoundingClientRect();
+  const x = (event.clientX - rect.left) / rect.width - 0.5;
+  const y = (event.clientY - rect.top) / rect.height - 0.5;
+  heroCharacter.style.transform = `translate(${x * 10}px, ${y * 7}px)`;
+});
 
-const yearElement =
-    document.getElementById("year");
+heroVisual?.addEventListener("mouseleave", () => {
+  heroCharacter.style.transform = "";
+});
 
+$("#contactForm")?.addEventListener("submit", (event) => {
+  event.preventDefault();
 
-if (yearElement) {
+  const name = $("#name").value.trim();
+  const email = $("#email").value.trim();
+  const subject = $("#subject").value;
+  const message = $("#message").value.trim();
+  const status = $("#formStatus");
 
-    yearElement.textContent =
-        new Date().getFullYear();
+  const body = encodeURIComponent(
+    `Name: ${name}\nEmail: ${email}\n\n${message}`
+  );
 
-}
+  window.location.href =
+    `mailto:bhanuvamshi0211@gmail.com?subject=${encodeURIComponent(subject)}&body=${body}`;
 
-
-/* ================= HERO PARALLAX ================= */
-
-const character =
-    document.querySelector(
-        ".hero-character img"
-    );
-
-
-let ticking = false;
-
-
-function updateParallax() {
-
-    if (
-        character &&
-        window.innerWidth > 820
-    ) {
-
-        const scroll =
-            window.scrollY;
-
-        character.style.transform =
-            `translateY(${scroll * 0.035}px)`;
-
-    }
-
-    ticking = false;
-
-}
-
-
-window.addEventListener(
-    "scroll",
-    () => {
-
-        if (!ticking) {
-
-            window.requestAnimationFrame(
-                updateParallax
-            );
-
-            ticking = true;
-
-        }
-
-    },
-    {
-        passive: true
-    }
-);
-
-
-/* ================= BUTTON RIPPLE ================= */
-
-document
-    .querySelectorAll(
-        ".primary-button, .outline-button"
-    )
-    .forEach(button => {
-
-        button.addEventListener(
-            "click",
-            function () {
-
-                this.style.transform =
-                    "scale(.97)";
-
-                setTimeout(() => {
-
-                    this.style.transform =
-                        "";
-
-                }, 120);
-
-            }
-        );
-
-    });
-
-
-/* ================= ESCAPE CLOSE MENU ================= */
-
-document.addEventListener(
-    "keydown",
-    event => {
-
-        if (
-            event.key === "Escape" &&
-            navbar &&
-            navbar.classList.contains("open")
-        ) {
-
-            navbar.classList.remove("open");
-
-            if (menuToggle) {
-
-                menuToggle.setAttribute(
-                    "aria-expanded",
-                    "false"
-                );
-
-            }
-
-        }
-
-    }
-);
+  status.textContent = "Opening your email app…";
+});
