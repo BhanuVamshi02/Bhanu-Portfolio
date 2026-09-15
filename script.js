@@ -1,103 +1,68 @@
-const $ = (selector, root = document) => root.querySelector(selector);
-const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
+const $ = (selector, root = document) =>
+  root.querySelector(selector);
+
+const $$ = (selector, root = document) =>
+  [...root.querySelectorAll(selector)];
+
+
+/* =========================================
+   MOBILE NAVIGATION
+========================================= */
+
+const mobileToggle = $("#mobileToggle");
+const mobileNav = $("#mobileNav");
+
+if (mobileToggle && mobileNav) {
+  mobileToggle.addEventListener("click", () => {
+    const isOpen = mobileNav.classList.toggle("open");
+
+    mobileToggle.textContent = isOpen ? "×" : "☰";
+    mobileToggle.setAttribute(
+      "aria-expanded",
+      String(isOpen)
+    );
+  });
+
+  $$(".mobile-nav a").forEach((link) => {
+    link.addEventListener("click", () => {
+      mobileNav.classList.remove("open");
+
+      mobileToggle.textContent = "☰";
+      mobileToggle.setAttribute(
+        "aria-expanded",
+        "false"
+      );
+    });
+  });
+}
+
 
 /* =========================================
    THEME TOGGLE
 ========================================= */
 
-const body = document.body;
-const themeToggle = $("#themeToggle");
+const themeSwitch = $("#themeSwitch");
 
-function setTheme(theme) {
-  body.classList.toggle("light", theme === "light");
-  localStorage.setItem("bhanu-theme", theme);
-}
-
-// Restore saved theme
-setTheme(localStorage.getItem("bhanu-theme") || "dark");
-
-themeToggle?.addEventListener("click", () => {
-  const currentTheme = body.classList.contains("light")
-    ? "light"
-    : "dark";
-
-  setTheme(currentTheme === "light" ? "dark" : "light");
-});
-
-
-/* =========================================
-   MOBILE MENU
-========================================= */
-
-const menuBtn = $("#menuBtn");
-const mobileNav = $("#mobileNav");
-
-menuBtn?.addEventListener("click", () => {
-  const isOpen = mobileNav.classList.toggle("open");
-
-  menuBtn.setAttribute(
-    "aria-expanded",
-    String(isOpen)
-  );
-
-  menuBtn.textContent = isOpen ? "×" : "☰";
-});
-
-// Close mobile menu when a link is clicked
-$$(".mobile-nav a").forEach((link) => {
-  link.addEventListener("click", () => {
-    mobileNav.classList.remove("open");
-
-    menuBtn.setAttribute(
-      "aria-expanded",
-      "false"
-    );
-
-    menuBtn.textContent = "☰";
+if (themeSwitch) {
+  themeSwitch.addEventListener("click", () => {
+    document.body.classList.toggle("light");
   });
-});
-
-
-/* =========================================
-   ACTIVE NAVIGATION
-========================================= */
-
-const sections = $$("main section[id]");
-const navLinks = $$(".nav-link");
-
-const navObserver = new IntersectionObserver(
-  (entries) => {
-    entries.forEach((entry) => {
-      if (!entry.isIntersecting) return;
-
-      navLinks.forEach((link) => {
-        const target =
-          link.getAttribute("href") ===
-          `#${entry.target.id}`;
-
-        link.classList.toggle("active", target);
-      });
-    });
-  },
-  {
-    rootMargin: "-35% 0px -55% 0px",
-    threshold: 0
-  }
-);
-
-sections.forEach((section) => {
-  navObserver.observe(section);
-});
+}
 
 
 /* =========================================
    SCROLL REVEAL ANIMATION
 ========================================= */
 
+const revealElements = $$(".reveal");
+
 const revealObserver = new IntersectionObserver(
   (entries, observer) => {
     entries.forEach((entry) => {
-      if (!entry.isIntersecting) return;
+
+      if (!entry.isIntersecting) {
+        return;
+      }
 
       entry.target.classList.add("visible");
 
@@ -109,13 +74,53 @@ const revealObserver = new IntersectionObserver(
   }
 );
 
-$$(".reveal").forEach((element, index) => {
+revealElements.forEach((element, index) => {
 
-  // Small staggered animation delay
   element.style.transitionDelay =
-    `${Math.min(index * 35, 220)}ms`;
+    `${Math.min(index * 30, 180)}ms`;
 
   revealObserver.observe(element);
+});
+
+
+/* =========================================
+   ACTIVE NAVIGATION
+========================================= */
+
+const sections = $$("main section[id]");
+const navigationLinks = $$(".nav a");
+
+const sectionObserver = new IntersectionObserver(
+  (entries) => {
+
+    entries.forEach((entry) => {
+
+      if (!entry.isIntersecting) {
+        return;
+      }
+
+      navigationLinks.forEach((link) => {
+
+        const target =
+          link.getAttribute("href") ===
+          `#${entry.target.id}`;
+
+        link.classList.toggle(
+          "active",
+          target
+        );
+      });
+
+    });
+
+  },
+  {
+    rootMargin: "-35% 0px -55% 0px"
+  }
+);
+
+sections.forEach((section) => {
+  sectionObserver.observe(section);
 });
 
 
@@ -123,11 +128,14 @@ $$(".reveal").forEach((element, index) => {
    FLOATING PARTICLES
 ========================================= */
 
-const particlesContainer = $("#particles");
+const particleContainer =
+  $("#particles");
 
-if (particlesContainer) {
+if (particleContainer) {
 
-  for (let i = 0; i < 34; i++) {
+  const particleCount = 34;
+
+  for (let i = 0; i < particleCount; i++) {
 
     const particle =
       document.createElement("span");
@@ -146,7 +154,7 @@ if (particlesContainer) {
     particle.style.animationDuration =
       `${5 + Math.random() * 6}s`;
 
-    particlesContainer.appendChild(
+    particleContainer.appendChild(
       particle
     );
   }
@@ -154,28 +162,47 @@ if (particlesContainer) {
 
 
 /* =========================================
-   BACKGROUND PARALLAX
+   BACKGROUND PARALLAX EFFECT
 ========================================= */
 
-const pageBg = $(".page-bg");
+const background =
+  $(".background");
 
 window.addEventListener(
   "pointermove",
   (event) => {
 
-    if (!pageBg) return;
+    if (!background) {
+      return;
+    }
 
-    // Disable parallax on smaller screens
-    if (window.innerWidth <= 700) return;
+    /*
+      Disable parallax on mobile
+      for better performance.
+    */
 
-    const x =
-      (event.clientX / window.innerWidth - 0.5) * 10;
+    if (window.innerWidth <= 700) {
+      return;
+    }
 
-    const y =
-      (event.clientY / window.innerHeight - 0.5) * 7;
+    const mouseX =
+      event.clientX /
+      window.innerWidth -
+      0.5;
 
-    pageBg.style.transform =
-      `scale(1.04) translate(${x}px, ${y}px)`;
+    const mouseY =
+      event.clientY /
+      window.innerHeight -
+      0.5;
+
+    const moveX =
+      mouseX * 8;
+
+    const moveY =
+      mouseY * 6;
+
+    background.style.transform =
+      `scale(1.035) translate(${moveX}px, ${moveY}px)`;
   },
   {
     passive: true
@@ -184,10 +211,58 @@ window.addEventListener(
 
 
 /* =========================================
-   EXPERIENCE / STATS COUNTERS
+   HERO IMAGE FLOATING EFFECT
 ========================================= */
 
-const counters = $$("[data-count]");
+const heroCharacter =
+  $(".hero-character-wrap");
+
+if (heroCharacter) {
+
+  let animationFrame;
+
+  window.addEventListener(
+    "scroll",
+    () => {
+
+      if (window.innerWidth <= 700) {
+        return;
+      }
+
+      if (animationFrame) {
+        cancelAnimationFrame(animationFrame);
+      }
+
+      animationFrame =
+        requestAnimationFrame(() => {
+
+          const scrollPosition =
+            window.scrollY;
+
+          const movement =
+            Math.min(
+              scrollPosition * 0.04,
+              15
+            );
+
+          heroCharacter.style.transform =
+            `translateY(${-movement}px)`;
+
+        });
+    },
+    {
+      passive: true
+    }
+  );
+}
+
+
+/* =========================================
+   STATS COUNTER ANIMATION
+========================================= */
+
+const counters =
+  $$("[data-number]");
 
 const counterObserver =
   new IntersectionObserver(
@@ -195,19 +270,24 @@ const counterObserver =
 
       entries.forEach((entry) => {
 
-        if (!entry.isIntersecting) return;
+        if (!entry.isIntersecting) {
+          return;
+        }
 
-        const element = entry.target;
+        const element =
+          entry.target;
 
         const target =
-          Number(element.dataset.count);
+          Number(
+            element.dataset.number
+          );
 
         const duration = 900;
 
         const startTime =
           performance.now();
 
-        function animateCounter(currentTime) {
+        function animate(currentTime) {
 
           const progress =
             Math.min(
@@ -216,21 +296,34 @@ const counterObserver =
               1
             );
 
-          // Ease-out animation
+          /*
+            Ease-out animation
+          */
+
           const eased =
-            1 - Math.pow(1 - progress, 3);
+            1 -
+            Math.pow(
+              1 - progress,
+              3
+            );
 
           let value;
 
           if (target === 2.7) {
 
             value =
-              (target * eased).toFixed(1);
+              (
+                target *
+                eased
+              ).toFixed(1);
 
           } else {
 
             value =
-              Math.round(target * eased);
+              Math.round(
+                target *
+                eased
+              );
           }
 
           element.textContent =
@@ -239,17 +332,28 @@ const counterObserver =
           if (progress < 1) {
 
             requestAnimationFrame(
-              animateCounter
+              animate
             );
 
+          } else {
+
+            /*
+              Make sure final value
+              is exact.
+            */
+
+            element.textContent =
+              `${target}+`;
           }
         }
 
         requestAnimationFrame(
-          animateCounter
+          animate
         );
 
-        observer.unobserve(element);
+        observer.unobserve(
+          element
+        );
       });
     },
     {
@@ -266,67 +370,165 @@ counters.forEach((counter) => {
    CONTACT FORM
 ========================================= */
 
-const form = $("#contactForm");
-const status = $("#formStatus");
+const contactForm =
+  $("#contactForm");
 
-form?.addEventListener(
-  "submit",
-  (event) => {
+const formStatus =
+  $("#formStatus");
 
-    event.preventDefault();
+if (contactForm) {
 
-    const name =
-      $("#name")?.value.trim();
+  contactForm.addEventListener(
+    "submit",
+    (event) => {
 
-    const email =
-      $("#email")?.value.trim();
+      event.preventDefault();
 
-    const subject =
-      $("#subject")?.value.trim();
+      const name =
+        $("#name")?.value.trim();
 
-    const message =
-      $("#message")?.value.trim();
+      const email =
+        $("#email")?.value.trim();
+
+      const subject =
+        $("#subject")?.value.trim();
+
+      const message =
+        $("#message")?.value.trim();
 
 
-    // Basic validation
-    if (
-      !name ||
-      !email ||
-      !subject ||
-      !message
-    ) {
+      /* Basic validation */
 
-      if (status) {
-        status.textContent =
-          "Please complete all fields.";
+      if (
+        !name ||
+        !email ||
+        !subject ||
+        !message
+      ) {
+
+        if (formStatus) {
+
+          formStatus.textContent =
+            "Please complete all fields.";
+
+        }
+
+        return;
       }
 
-      return;
+
+      /*
+        Create email content.
+      */
+
+      const emailBody =
+        `Name: ${name}\n` +
+        `Email: ${email}\n\n` +
+        `${message}`;
+
+
+      /*
+        Open the user's default
+        email application.
+      */
+
+      const mailto =
+        "mailto:bhanuvamshi0211@gmail.com" +
+        `?subject=${encodeURIComponent(subject)}` +
+        `&body=${encodeURIComponent(emailBody)}`;
+
+
+      if (formStatus) {
+
+        formStatus.textContent =
+          "Opening your email client…";
+
+      }
+
+
+      window.location.href =
+        mailto;
+
+    }
+  );
+}
+
+
+/* =========================================
+   SMOOTH SCROLLING
+========================================= */
+
+$$('a[href^="#"]').forEach(
+  (link) => {
+
+    link.addEventListener(
+      "click",
+      (event) => {
+
+        const targetId =
+          link.getAttribute("href");
+
+        if (
+          !targetId ||
+          targetId === "#"
+        ) {
+          return;
+        }
+
+        const target =
+          document.querySelector(
+            targetId
+          );
+
+        if (!target) {
+          return;
+        }
+
+        event.preventDefault();
+
+        target.scrollIntoView({
+          behavior: "smooth",
+          block: "start"
+        });
+
+      }
+    );
+
+  }
+);
+
+
+/* =========================================
+   ESC KEY - CLOSE MOBILE MENU
+========================================= */
+
+document.addEventListener(
+  "keydown",
+  (event) => {
+
+    if (
+      event.key === "Escape" &&
+      mobileNav &&
+      mobileNav.classList.contains("open")
+    ) {
+
+      mobileNav.classList.remove(
+        "open"
+      );
+
+      if (mobileToggle) {
+
+        mobileToggle.textContent =
+          "☰";
+
+        mobileToggle.setAttribute(
+          "aria-expanded",
+          "false"
+        );
+
+      }
     }
 
-
-    /*
-      Open the visitor's default
-      email application.
-    */
-
-    const mailBody =
-      `Name: ${name}\n` +
-      `Email: ${email}\n\n` +
-      `${message}`;
-
-    const mailto =
-      `mailto:bhanuvamshi0211@gmail.com` +
-      `?subject=${encodeURIComponent(subject)}` +
-      `&body=${encodeURIComponent(mailBody)}`;
-
-
-    if (status) {
-      status.textContent =
-        "Opening your email client…";
-    }
-
-    window.location.href = mailto;
   }
 );
 
@@ -335,74 +537,15 @@ form?.addEventListener(
    CURRENT YEAR
 ========================================= */
 
-const yearElement = $("#year");
+const yearElement =
+  $("#year");
 
 if (yearElement) {
+
   yearElement.textContent =
     new Date().getFullYear();
+
 }
-
-
-/* =========================================
-   SMOOTH ANCHOR HANDLING
-========================================= */
-
-$$('a[href^="#"]').forEach((link) => {
-
-  link.addEventListener("click", (event) => {
-
-    const targetId =
-      link.getAttribute("href");
-
-    if (
-      !targetId ||
-      targetId === "#"
-    ) {
-      return;
-    }
-
-    const target =
-      document.querySelector(targetId);
-
-    if (!target) return;
-
-    event.preventDefault();
-
-    target.scrollIntoView({
-      behavior: "smooth",
-      block: "start"
-    });
-  });
-});
-
-
-/* =========================================
-   KEYBOARD ACCESSIBILITY
-========================================= */
-
-document.addEventListener(
-  "keydown",
-  (event) => {
-
-    // Close mobile menu with Escape
-    if (
-      event.key === "Escape" &&
-      mobileNav?.classList.contains("open")
-    ) {
-
-      mobileNav.classList.remove("open");
-
-      menuBtn?.setAttribute(
-        "aria-expanded",
-        "false"
-      );
-
-      if (menuBtn) {
-        menuBtn.textContent = "☰";
-      }
-    }
-  }
-);
 
 
 /* =========================================
@@ -410,45 +553,60 @@ document.addEventListener(
 ========================================= */
 
 const heroImage =
-  $(".art-frame img");
+  $(".hero-character-wrap img");
 
-heroImage?.addEventListener(
-  "load",
-  () => {
+if (heroImage) {
+
+  if (heroImage.complete) {
 
     heroImage.classList.add(
       "image-loaded"
     );
 
+  } else {
+
+    heroImage.addEventListener(
+      "load",
+      () => {
+
+        heroImage.classList.add(
+          "image-loaded"
+        );
+
+      }
+    );
+
   }
-);
-
-
-/* =========================================
-   REDUCE MOTION SUPPORT
-========================================= */
-
-const prefersReducedMotion =
-  window.matchMedia(
-    "(prefers-reduced-motion: reduce)"
-  );
-
-if (prefersReducedMotion.matches) {
-
-  document.documentElement.style
-    .scrollBehavior = "auto";
 }
 
 
 /* =========================================
-   CONSOLE MESSAGE
+   REDUCED MOTION SUPPORT
+========================================= */
+
+const reducedMotion =
+  window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  );
+
+if (reducedMotion.matches) {
+
+  document.documentElement.style
+    .scrollBehavior = "auto";
+
+}
+
+
+/* =========================================
+   CONSOLE BRANDING
 ========================================= */
 
 console.log(
   "%cBhanu Vamshi Portfolio",
-  "color:#f4b84a;font-size:18px;font-weight:bold;"
+  "color:#f5b945;font-size:18px;font-weight:700;"
 );
 
 console.log(
-  "ServiceNow Developer | Technical Consultant"
+  "%cServiceNow Professional",
+  "color:#9aa8b3;font-size:12px;"
 );
