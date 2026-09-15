@@ -557,51 +557,9 @@ img {
 }
 
 
-/* =========================================================
-   HERO BACKGROUND
 
-   IMPORTANT:
-   This is the anime-background.jpg.
 
-   There is NO permanent dark overlay.
-   ========================================================= */
 
-.hero-background {
-
-    position:
-        absolute;
-
-    inset:
-        0;
-
-    z-index:
-        -3;
-
-    background-image:
-        url("anime-background.jpg");
-
-    background-size:
-        cover;
-
-    background-position:
-        center
-        center;
-
-    background-repeat:
-        no-repeat;
-
-    opacity:
-        1;
-
-    filter:
-        none;
-
-    transition:
-        filter
-        0.7s
-        ease;
-
-}
 
 
 /* =========================================================
