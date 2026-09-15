@@ -622,6 +622,8 @@ img {
    ========================================================= */
 
 .hero-shade {
+     width: 50%;
+    left: -60px;
 
     position:
         absolute;
@@ -636,8 +638,7 @@ img {
         none;
 
       background: radial-gradient(ellipse at center, rgb(1 8 17 / 58%) 0%, rgb(1 8 17 / 54%) 30%, transparent 65%);
-    width: 50%;
-    left: -60px;
+  
 
 }
 
@@ -2974,10 +2975,7 @@ img {
 
     }
 
-    .hero-shade {
-       width:100%;
-       left:0;
-    }
+ 
 
     .hero-text {
 
