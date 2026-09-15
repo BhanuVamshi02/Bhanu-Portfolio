@@ -43,6 +43,14 @@
 
     <div class="floating-particles" id="particles"></div>
 
+    <!-- =====================================================
+         PAGE BACKGROUND OVERLAY
+         Fades progressively from the Stats section downward.
+         ===================================================== -->
+
+    <div class="background-overlay" aria-hidden="true"></div>
+
+
 
     <!-- =====================================================
          HEADER
@@ -119,19 +127,6 @@
         <!-- Header Actions -->
 
         <div class="top-actions">
-
-            <button
-                class="theme-toggle"
-                id="themeToggle"
-                type="button"
-                aria-label="Toggle theme"
-            >
-                <span>☀</span>
-                <i></i>
-                <span>☾</span>
-            </button>
-
-
             <a
                 class="resume-button"
                 href="Bhanu_Vamshi_Resume.pdf"
@@ -382,16 +377,7 @@
             </div>
 
 
-            <!-- =================================================
-                 BACKGROUND OVERLAY
 
-                 IMPORTANT:
-                 This is intentionally AFTER .hero-inner.
-                 It is invisible at page top.
-                 JS adds .scrolled to .hero.
-                 ================================================= -->
-
-            <div class="background-overlay"></div>
 
         </section>
 
@@ -691,168 +677,6 @@
 
 
         <!-- =================================================
-             EXPERIENCE
-             ================================================= -->
-
-        <section
-            class="experience-section page-width"
-            id="experience"
-        >
-
-            <div class="experience-heading">
-
-                <div>
-
-                    <div class="section-label">
-                        ▣
-                        <span>EXPERIENCE</span>
-                        <i></i>
-                    </div>
-
-                </div>
-
-
-                <div class="hand-note">
-
-                    “Small steps<br>
-                    every day lead to<br>
-                    big results.”
-
-                </div>
-
-            </div>
-
-
-
-            <div class="experience-row">
-
-
-                <!-- Associate Technical Consultant -->
-
-                <article class="experience-item">
-
-                    <div class="now-badge">
-                        <span>now</span>
-                    </div>
-
-
-                    <div class="experience-content">
-
-                        <h4>
-                            Associate Technical Consultant
-                        </h4>
-
-                        <p class="date">
-                            April 2026 — Present
-                        </p>
-
-                        <p>
-
-                            Continue developing and customizing
-                            ServiceNow applications while taking greater
-                            ownership of technical implementation and
-                            client-facing activities. Work with clients
-                            and project teams to understand requirements,
-                            analyze issues, identify root causes,
-                            recommend suitable approaches, and support
-                            solution development, testing and implementation.
-
-                        </p>
-
-                    </div>
-
-
-                    <span class="arrow">
-                        ›
-                    </span>
-
-                </article>
-
-
-
-                <!-- Platform Developer -->
-
-                <article class="experience-item">
-
-                    <div class="now-badge">
-                        <span>now</span>
-                    </div>
-
-
-                    <div class="experience-content">
-
-                        <h4>
-                            Platform Developer
-                        </h4>
-
-                        <p class="date">
-                            October 2024 — March 2026
-                        </p>
-
-                        <p>
-
-                            Delivered hands-on ServiceNow development
-                            across ITSM, CSM, Portals, Workspaces and
-                            Custom Applications. Worked with UI Builder,
-                            Service Portal, Employee Center, Service
-                            Catalog, Business Rules, Client Scripts,
-                            UI Policies, UI Actions, Declarative Actions,
-                            ACLs, Script Includes and Flow Designer.
-
-                        </p>
-
-                    </div>
-
-
-                    <span class="arrow">
-                        ›
-                    </span>
-
-                </article>
-
-
-
-                <!-- Associate Developer -->
-
-                <article class="experience-item">
-
-                    <div class="now-badge">
-                        <span>now</span>
-                    </div>
-
-
-                    <div class="experience-content">
-
-                        <h4>
-                            Associate Developer
-                        </h4>
-
-                        <p class="date">
-                            February 2024 — September 2024
-                        </p>
-
-                        <p>
-
-                            Built a strong foundation in ServiceNow
-                            platform development and ITSM concepts,
-                            supported implementation activities and
-                            gained practical exposure to ServiceNow
-                            development practices. Completed CSA and
-                            CIS-ITSM certifications during this period.
-
-                        </p>
-
-                    </div>
-
-                </article>
-
-            </div>
-
-        </section>
-
-
-
-        <!-- =================================================
              SKILLS
              ================================================= -->
 
@@ -1031,6 +855,170 @@
                     </small>
 
                 </div>
+
+            </div>
+
+        </section>
+
+
+
+
+
+        <!-- =================================================
+             EXPERIENCE
+             ================================================= -->
+
+        <section
+            class="experience-section page-width"
+            id="experience"
+        >
+
+            <div class="experience-heading">
+
+                <div>
+
+                    <div class="section-label">
+                        ▣
+                        <span>EXPERIENCE</span>
+                        <i></i>
+                    </div>
+
+                </div>
+
+
+                <div class="hand-note">
+
+                    “Small steps<br>
+                    every day lead to<br>
+                    big results.”
+
+                </div>
+
+            </div>
+
+
+
+            <div class="experience-row">
+
+
+                <!-- Associate Technical Consultant -->
+
+                <article class="experience-item">
+
+                    <div class="now-badge">
+                        <span>now</span>
+                    </div>
+
+
+                    <div class="experience-content">
+
+                        <h4>
+                            Associate Technical Consultant
+                        </h4>
+
+                        <p class="date">
+                            April 2026 — Present
+                        </p>
+
+                        <p>
+
+                            Continue developing and customizing
+                            ServiceNow applications while taking greater
+                            ownership of technical implementation and
+                            client-facing activities. Work with clients
+                            and project teams to understand requirements,
+                            analyze issues, identify root causes,
+                            recommend suitable approaches, and support
+                            solution development, testing and implementation.
+
+                        </p>
+
+                    </div>
+
+
+                    <span class="arrow">
+                        ›
+                    </span>
+
+                </article>
+
+
+
+                <!-- Platform Developer -->
+
+                <article class="experience-item">
+
+                    <div class="now-badge">
+                        <span>now</span>
+                    </div>
+
+
+                    <div class="experience-content">
+
+                        <h4>
+                            Platform Developer
+                        </h4>
+
+                        <p class="date">
+                            October 2024 — March 2026
+                        </p>
+
+                        <p>
+
+                            Delivered hands-on ServiceNow development
+                            across ITSM, CSM, Portals, Workspaces and
+                            Custom Applications. Worked with UI Builder,
+                            Service Portal, Employee Center, Service
+                            Catalog, Business Rules, Client Scripts,
+                            UI Policies, UI Actions, Declarative Actions,
+                            ACLs, Script Includes and Flow Designer.
+
+                        </p>
+
+                    </div>
+
+
+                    <span class="arrow">
+                        ›
+                    </span>
+
+                </article>
+
+
+
+                <!-- Associate Developer -->
+
+                <article class="experience-item">
+
+                    <div class="now-badge">
+                        <span>now</span>
+                    </div>
+
+
+                    <div class="experience-content">
+
+                        <h4>
+                            Associate Developer
+                        </h4>
+
+                        <p class="date">
+                            February 2024 — September 2024
+                        </p>
+
+                        <p>
+
+                            Built a strong foundation in ServiceNow
+                            platform development and ITSM concepts,
+                            supported implementation activities and
+                            gained practical exposure to ServiceNow
+                            development practices. Completed CSA and
+                            CIS-ITSM certifications during this period.
+
+                        </p>
+
+                    </div>
+
+                </article>
 
             </div>
 
