@@ -635,20 +635,8 @@ img {
     pointer-events:
         none;
 
-    background:
-        linear-gradient(
-            90deg,
-            rgba(1, 8, 17, 0.90) 0%,
-            rgba(1, 8, 17, 0.78) 28%,
-            rgba(1, 8, 17, 0.52) 50%,
-            rgba(1, 8, 17, 0.20) 72%,
-            rgba(1, 8, 17, 0.02) 88%,
-            transparent 100%
-        );
+      background: radial-gradient(ellipse at center, rgb(1 8 17 / 58%) 0%, rgb(1 8 17 / 54%) 30%, transparent 65%);
 
-    box-shadow:
-        inset 0 150px 170px
-        rgba(1, 8, 17, 0.62);
 
 }
 
