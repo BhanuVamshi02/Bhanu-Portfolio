@@ -2,398 +2,1419 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+
     <meta
         name="viewport"
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>Bhanu Vamshi | Portfolio</title>
+    <meta
+        name="description"
+        content="Bhanu Vamshi - ServiceNow Professional and Associate Technical Consultant"
+    >
 
+    <meta
+        name="theme-color"
+        content="#020912"
+    >
+
+    <title>Bhanu Vamshi | ServiceNow Professional</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <!-- Styles -->
     <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
 
-    <!-- =========================================
-         HERO
-    ========================================== -->
-    <header class="hero" id="home">
+    <!-- =====================================================
+         GLOBAL BACKGROUND
+         ===================================================== -->
 
-        <div class="hero-background"></div>
+    <div class="site-background"></div>
 
-        <div class="hero-inner">
+    <div class="floating-particles" id="particles"></div>
 
-            <!-- LEFT SIDE -->
-            <div class="hero-text">
 
-                <div class="hero-tag">
-                    PORTFOLIO
-                </div>
+    <!-- =====================================================
+         HEADER
+         ===================================================== -->
 
-                <h1>
-                    BHANU<br>
-                    <span>VAMSHI</span>
-                </h1>
+    <header class="topbar" id="topbar">
 
-                <div class="hero-role">
-                    SOFTWARE ENGINEER
-                </div>
+        <a
+            href="#home"
+            class="brand"
+            aria-label="Bhanu Vamshi Home"
+        >
+            <span class="brand-mark">BV</span>
+            <span class="brand-name">Bhanu Vamshi</span>
+        </a>
 
-                <p class="hero-description">
-                    Building scalable, reliable and user-focused
-                    software solutions with a strong focus on
-                    engineering excellence.
-                </p>
 
-                <div class="hero-actions">
+        <!-- Desktop Navigation -->
 
-                    <a href="#experience" class="btn btn-primary">
-                        EXPLORE WORK
-                    </a>
+        <nav class="desktop-nav" id="desktopNav">
 
-                    <a href="#contact" class="btn btn-secondary">
-                        CONTACT ME
-                    </a>
+            <a
+                href="#home"
+                class="nav-link active"
+            >
+                Home
+            </a>
 
-                </div>
+            <a
+                href="#about"
+                class="nav-link"
+            >
+                About
+            </a>
 
-            </div>
+            <a
+                href="#experience"
+                class="nav-link"
+            >
+                Experience
+            </a>
+
+            <a
+                href="#skills"
+                class="nav-link"
+            >
+                Skills
+            </a>
+
+            <a
+                href="#services"
+                class="nav-link"
+            >
+                Projects
+            </a>
+
+            <a
+                href="#education"
+                class="nav-link"
+            >
+                Education
+            </a>
+
+            <a
+                href="#contact"
+                class="nav-link"
+            >
+                Contact
+            </a>
+
+        </nav>
+
+
+        <!-- Header Actions -->
+
+        <div class="top-actions">
+
+            <button
+                class="theme-toggle"
+                id="themeToggle"
+                type="button"
+                aria-label="Toggle theme"
+            >
+                <span>☀</span>
+                <i></i>
+                <span>☾</span>
+            </button>
+
+
+            <a
+                class="resume-button"
+                href="Bhanu_Vamshi_Resume.pdf"
+                download
+            >
+                <span>⇩</span>
+                Download Resume
+            </a>
+
+
+            <button
+                class="menu-button"
+                id="menuButton"
+                type="button"
+                aria-label="Open navigation"
+                aria-expanded="false"
+            >
+                ☰
+            </button>
 
         </div>
 
     </header>
 
 
-    <!-- =========================================
-         STATS
-         THE FADE STARTS HERE
-    ========================================== -->
-    <section class="stats" id="stats">
+    <!-- =====================================================
+         MOBILE NAVIGATION
+         ===================================================== -->
 
-        <div class="stats-fade"></div>
+    <nav
+        class="mobile-nav"
+        id="mobileNav"
+    >
 
-        <div class="container stats-inner">
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#experience">Experience</a>
+        <a href="#skills">Skills</a>
+        <a href="#services">Projects</a>
+        <a href="#education">Education</a>
+        <a href="#contact">Contact</a>
 
-            <div class="stat">
-                <span class="stat-number">01</span>
-                <span class="stat-label">ENGINEERING</span>
-            </div>
-
-            <div class="stat">
-                <span class="stat-number">02</span>
-                <span class="stat-label">EXPERIENCE</span>
-            </div>
-
-            <div class="stat">
-                <span class="stat-number">03</span>
-                <span class="stat-label">TECHNOLOGY</span>
-            </div>
-
-            <div class="stat">
-                <span class="stat-number">04</span>
-                <span class="stat-label">PROBLEM SOLVING</span>
-            </div>
-
-        </div>
-
-    </section>
+    </nav>
 
 
-    <!-- =========================================
-         ABOUT
-    ========================================== -->
-    <section class="content-section about" id="about">
+    <!-- =====================================================
+         MAIN
+         ===================================================== -->
 
-        <div class="container">
+    <main>
 
-            <div class="section-heading">
-                <span class="section-number">01</span>
 
-                <div>
-                    <span class="section-kicker">
-                        ABOUT ME
-                    </span>
+        <!-- =================================================
+             HERO
+             ================================================= -->
+
+        <section
+            class="hero"
+            id="home"
+        >
+
+            <!-- Anime background -->
+            <div class="hero-background"></div>
+
+
+            <!-- =================================================
+                 HERO INNER
+                 IMPORTANT:
+                 The overlay is AFTER this element.
+                 ================================================= -->
+
+            <div class="hero-inner page-width">
+
+
+                <!-- LEFT CONTENT -->
+
+                <div class="hero-copy">
+
+                    <div class="professional-pill">
+
+                        <span>⚙</span>
+
+                        <span>
+                            ServiceNow Professional
+                        </span>
+
+                    </div>
+
+
+                    <p class="hello">
+                        Hi, I'm
+                    </p>
+
+
+                    <h1>
+                        Bhanu
+                        <span>Vamshi</span>
+                    </h1>
+
 
                     <h2>
-                        ENGINEERING<br>
-                        WITH PURPOSE.
+                        Building Scalable Solutions for a Smarter Tomorrow
                     </h2>
+
+
+                    <p class="hero-text">
+
+                        ServiceNow professional with approximately
+                        2.7+ years of experience in ServiceNow development
+                        and implementation, with hands-on experience across
+                        ITSM, CSM, Workspaces, Portals, Automation and
+                        Custom Applications.
+
+                    </p>
+
+
+                    <!-- CTA -->
+
+                    <div class="hero-ctas">
+
+                        <a
+                            class="cta primary"
+                            href="#experience"
+                        >
+                            View My Work
+                            <strong>→</strong>
+                        </a>
+
+
+                        <a
+                            class="cta secondary"
+                            href="#contact"
+                        >
+                            <span>✉</span>
+                            <span>Contact Me</span>
+                        </a>
+
+                    </div>
+
+
+                    <!-- Hero Tags -->
+
+                    <div class="hero-tags">
+
+                        <span>
+                            ☁ ServiceNow
+                        </span>
+
+                        <span>
+                            ⚙ ITSM
+                        </span>
+
+                        <span>
+                            ♙ CSM
+                        </span>
+
+                        <span>
+                            ▦ Workspaces
+                        </span>
+
+                        <span>
+                            ◉ Portals
+                        </span>
+
+                        <span>
+                            ⚡ Automation
+                        </span>
+
+                    </div>
+
                 </div>
+
+
+                <!-- RIGHT SIDE
+                     NO hero-character.png HERE
+
+                     The character already exists inside
+                     anime-background.jpg.
+                -->
+
+                <div class="hero-art">
+
+                    <div class="hero-art-glow"></div>
+
+
+                    <!-- Social Card -->
+
+                    <aside class="hero-social-card">
+
+                        <div class="quote">
+
+                            <span>“</span>
+
+                            <p>
+                                Better<br>
+                                <em>Solutions</em><br>
+                                Bigger Impact
+                            </p>
+
+                            <b></b>
+
+                        </div>
+
+
+                        <div class="social-links">
+
+                            <a
+                                href="https://www.linkedin.com/"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                <i>in</i>
+                                <span>LinkedIn</span>
+                            </a>
+
+
+                            <a
+                                href="https://github.com/BhanuVamshi02"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                <i>◉</i>
+                                <span>GitHub</span>
+                            </a>
+
+
+                            <a
+                                href="mailto:bhanuvamshi0211@gmail.com"
+                            >
+                                <i>✉</i>
+                                <span>Email</span>
+                            </a>
+
+                        </div>
+
+                    </aside>
+
+
+                    <div class="vertical-japanese">
+                        夢<br>
+                        を<br>
+                        追<br>
+                        え
+                    </div>
+
+                </div>
+
             </div>
 
-            <div class="section-content">
 
-                <p>
-                    I am a software engineer focused on building
-                    dependable, scalable and maintainable software
-                    solutions.
-                </p>
+            <!-- =================================================
+                 BACKGROUND OVERLAY
 
-                <p>
-                    My work involves understanding requirements,
-                    designing practical solutions, developing
-                    applications and continuously improving systems
-                    for performance, reliability and usability.
-                </p>
+                 IMPORTANT:
+                 This is intentionally AFTER .hero-inner.
+                 It is invisible at page top.
+                 JS adds .scrolled to .hero.
+                 ================================================= -->
 
-            </div>
+            <div class="background-overlay"></div>
 
-        </div>
-
-    </section>
+        </section>
 
 
-    <!-- =========================================
-         EXPERIENCE
-    ========================================== -->
-    <section class="content-section experience" id="experience">
 
-        <div class="container">
+        <!-- =================================================
+             STATS
+             ================================================= -->
 
-            <div class="section-heading">
-                <span class="section-number">02</span>
+        <section class="stats page-width">
+
+            <div class="stat">
+
+                <div class="stat-icon">
+                    ▣
+                </div>
 
                 <div>
-                    <span class="section-kicker">
-                        EXPERIENCE
-                    </span>
-
-                    <h2>
-                        WHAT<br>
-                        I DO.
-                    </h2>
+                    <strong>2.7+</strong>
+                    <span>Years of Experience</span>
                 </div>
-            </div>
-
-
-            <div class="experience-list">
-
-                <article class="experience-item">
-
-                    <div class="experience-index">
-                        01
-                    </div>
-
-                    <div class="experience-body">
-
-                        <h3>
-                            SOFTWARE ENGINEERING
-                        </h3>
-
-                        <p>
-                            Develop and maintain software solutions
-                            by translating requirements into clean,
-                            reliable and maintainable implementations.
-                        </p>
-
-                    </div>
-
-                </article>
-
-
-                <article class="experience-item">
-
-                    <div class="experience-index">
-                        02
-                    </div>
-
-                    <div class="experience-body">
-
-                        <h3>
-                            APPLICATION DEVELOPMENT
-                        </h3>
-
-                        <p>
-                            Work across application development,
-                            integration and enhancement while focusing
-                            on quality, performance and usability.
-                        </p>
-
-                    </div>
-
-                </article>
-
-
-                <article class="experience-item">
-
-                    <div class="experience-index">
-                        03
-                    </div>
-
-                    <div class="experience-body">
-
-                        <h3>
-                            SYSTEM IMPROVEMENT
-                        </h3>
-
-                        <p>
-                            Analyze existing implementations, identify
-                            improvement opportunities and contribute to
-                            more efficient and dependable solutions.
-                        </p>
-
-                    </div>
-
-                </article>
-
-
-                <article class="experience-item">
-
-                    <div class="experience-index">
-                        04
-                    </div>
-
-                    <div class="experience-body">
-
-                        <h3>
-                            COLLABORATION
-                        </h3>
-
-                        <p>
-                            Collaborate with teams to understand
-                            technical requirements, solve problems and
-                            deliver solutions aligned with business needs.
-                        </p>
-
-                    </div>
-
-                </article>
 
             </div>
 
-        </div>
 
-    </section>
+            <div class="stat">
 
-
-    <!-- =========================================
-         SKILLS
-    ========================================== -->
-    <section class="content-section skills" id="skills">
-
-        <div class="container">
-
-            <div class="section-heading">
-                <span class="section-number">03</span>
+                <div class="stat-icon">
+                    ✥
+                </div>
 
                 <div>
-                    <span class="section-kicker">
-                        SKILLS
+                    <strong>10+</strong>
+                    <span>Certifications</span>
+                </div>
+
+            </div>
+
+
+            <div class="stat">
+
+                <div class="stat-icon">
+                    ⚙
+                </div>
+
+                <div>
+                    <strong>100%</strong>
+                    <span>Commitment</span>
+                </div>
+
+            </div>
+
+
+            <div class="stat">
+
+                <div class="stat-icon">
+                    🚀
+                </div>
+
+                <div>
+                    <strong>Countless</strong>
+                    <span>Ideas &amp; Solutions</span>
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             ABOUT
+             ================================================= -->
+
+        <section
+            class="about-section page-width"
+            id="about"
+        >
+
+            <div class="about-panel glass">
+
+
+                <!-- About text -->
+
+                <div class="about-copy">
+
+                    <div class="section-label">
+                        ♟
+                        <span>ABOUT ME</span>
+                        <i></i>
+                    </div>
+
+
+                    <h3>
+                        Turning Ideas into
+                        <br>
+                        Impactful
+                        <em>Solutions</em>
+                    </h3>
+
+
+                    <p>
+
+                        I am a ServiceNow professional with approximately
+                        2.7 years of experience in development and
+                        implementation. I work across ITSM, CSM,
+                        Service Catalog, portals, workspaces, automation,
+                        scripting and platform configuration, with a focus
+                        on translating requirements into practical
+                        ServiceNow solutions.
+
+                    </p>
+
+
+                    <a
+                        class="learn-button"
+                        href="#experience"
+                    >
+                        Learn More
+                        <strong>→</strong>
+                    </a>
+
+                </div>
+
+
+
+                <!-- Capabilities -->
+
+                <div class="about-capabilities">
+
+                    <div class="capability">
+
+                        <span>▧</span>
+
+                        <div>
+                            <b>ITSM / CSM</b>
+                            <small>
+                                ServiceNow Expertise
+                            </small>
+                        </div>
+
+                    </div>
+
+
+                    <div class="capability">
+
+                        <span>▦</span>
+
+                        <div>
+                            <b>Workspaces &amp; Portals</b>
+                            <small>
+                                UI Builder &amp; Portal Development
+                            </small>
+                        </div>
+
+                    </div>
+
+
+                    <div class="capability">
+
+                        <span>⚡</span>
+
+                        <div>
+                            <b>Automation</b>
+                            <small>
+                                Flow Designer &amp; Scripting
+                            </small>
+                        </div>
+
+                    </div>
+
+
+                    <div class="capability">
+
+                        <span>♙</span>
+
+                        <div>
+                            <b>Consulting</b>
+                            <small>
+                                Requirements &amp; Solutioning
+                            </small>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- About image
+                     This is NOT the hero-image-frame.
+                     Keeping it here preserves the reference
+                     image used in the About section.
+                -->
+
+                <div class="about-image">
+
+                    <img
+                        src="hero-character.png"
+                        alt="Bhanu Vamshi portfolio artwork"
+                        loading="lazy"
+                    >
+
+                </div>
+
+            </div>
+
+
+
+            <!-- Skills preview -->
+
+            <div class="skills-preview glass">
+
+                <div class="section-label">
+                    ⚙
+                    <span>MY SKILLS</span>
+                    <i></i>
+                </div>
+
+
+                <div class="skill-mini-grid">
+
+                    <div>
+                        <span>☁</span>
+                        <b>ITSM</b>
+                    </div>
+
+                    <div>
+                        <span>♙</span>
+                        <b>CSM</b>
+                    </div>
+
+                    <div>
+                        <span>▦</span>
+                        <b>Workspaces</b>
+                    </div>
+
+                    <div>
+                        <span>▣</span>
+                        <b>Service Portal</b>
+                    </div>
+
+                    <div>
+                        <span>⚡</span>
+                        <b>Flow Designer</b>
+                    </div>
+
+                    <div>
+                        <span>&lt;/&gt;</span>
+                        <b>Scripting</b>
+                    </div>
+
+                    <div>
+                        <span>JS</span>
+                        <b>JavaScript</b>
+                    </div>
+
+                    <div>
+                        <span>↔</span>
+                        <b>Integrations</b>
+                    </div>
+
+                    <div>
+                        <span>▤</span>
+                        <b>Service Catalog</b>
+                    </div>
+
+                    <div>
+                        <span>▦</span>
+                        <b>UI Builder</b>
+                    </div>
+
+                    <div>
+                        <span>◉</span>
+                        <b>GlideAjax</b>
+                    </div>
+
+                    <div>
+                        <span>☆</span>
+                        <b>Now Experience</b>
+                    </div>
+
+                </div>
+
+
+                <a
+                    class="all-skills"
+                    href="#skills"
+                >
+                    View All Skills →
+                </a>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             EXPERIENCE
+             ================================================= -->
+
+        <section
+            class="experience-section page-width"
+            id="experience"
+        >
+
+            <div class="experience-heading">
+
+                <div>
+
+                    <div class="section-label">
+                        ▣
+                        <span>EXPERIENCE</span>
+                        <i></i>
+                    </div>
+
+                </div>
+
+
+                <div class="hand-note">
+
+                    “Small steps<br>
+                    every day lead to<br>
+                    big results.”
+
+                </div>
+
+            </div>
+
+
+
+            <div class="experience-row">
+
+
+                <!-- Associate Technical Consultant -->
+
+                <article class="experience-item">
+
+                    <div class="now-badge">
+                        <span>now</span>
+                    </div>
+
+
+                    <div class="experience-content">
+
+                        <h4>
+                            Associate Technical Consultant
+                        </h4>
+
+                        <p class="date">
+                            April 2026 — Present
+                        </p>
+
+                        <p>
+
+                            Continue developing and customizing
+                            ServiceNow applications while taking greater
+                            ownership of technical implementation and
+                            client-facing activities. Work with clients
+                            and project teams to understand requirements,
+                            analyze issues, identify root causes,
+                            recommend suitable approaches, and support
+                            solution development, testing and implementation.
+
+                        </p>
+
+                    </div>
+
+
+                    <span class="arrow">
+                        ›
                     </span>
 
-                    <h2>
-                        TOOLS OF<br>
-                        THE TRADE.
-                    </h2>
-                </div>
+                </article>
+
+
+
+                <!-- Platform Developer -->
+
+                <article class="experience-item">
+
+                    <div class="now-badge">
+                        <span>now</span>
+                    </div>
+
+
+                    <div class="experience-content">
+
+                        <h4>
+                            Platform Developer
+                        </h4>
+
+                        <p class="date">
+                            October 2024 — March 2026
+                        </p>
+
+                        <p>
+
+                            Delivered hands-on ServiceNow development
+                            across ITSM, CSM, Portals, Workspaces and
+                            Custom Applications. Worked with UI Builder,
+                            Service Portal, Employee Center, Service
+                            Catalog, Business Rules, Client Scripts,
+                            UI Policies, UI Actions, Declarative Actions,
+                            ACLs, Script Includes and Flow Designer.
+
+                        </p>
+
+                    </div>
+
+
+                    <span class="arrow">
+                        ›
+                    </span>
+
+                </article>
+
+
+
+                <!-- Associate Developer -->
+
+                <article class="experience-item">
+
+                    <div class="now-badge">
+                        <span>now</span>
+                    </div>
+
+
+                    <div class="experience-content">
+
+                        <h4>
+                            Associate Developer
+                        </h4>
+
+                        <p class="date">
+                            February 2024 — September 2024
+                        </p>
+
+                        <p>
+
+                            Built a strong foundation in ServiceNow
+                            platform development and ITSM concepts,
+                            supported implementation activities and
+                            gained practical exposure to ServiceNow
+                            development practices. Completed CSA and
+                            CIS-ITSM certifications during this period.
+
+                        </p>
+
+                    </div>
+
+                </article>
+
             </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             SKILLS
+             ================================================= -->
+
+        <section
+            class="skills-section page-width"
+            id="skills"
+        >
+
+            <div class="section-label">
+                ⚙
+                <span>MY SKILLS</span>
+                <i></i>
+            </div>
+
+
+            <h3 class="skills-title">
+                ServiceNow Capabilities &amp;
+                Technical Skills
+            </h3>
 
 
             <div class="skills-grid">
 
-                <div class="skill">
-                    <span>01</span>
-                    <h3>DEVELOPMENT</h3>
-                    <p>
-                        Building robust and maintainable
-                        software applications.
-                    </p>
+
+                <div class="skill-card">
+
+                    <span>☁</span>
+
+                    <b>ITSM</b>
+
+                    <small>
+                        IT Service Management
+                    </small>
+
                 </div>
 
-                <div class="skill">
-                    <span>02</span>
-                    <h3>PROBLEM SOLVING</h3>
-                    <p>
-                        Breaking complex requirements into
-                        practical technical solutions.
-                    </p>
+
+                <div class="skill-card">
+
+                    <span>♙</span>
+
+                    <b>CSM</b>
+
+                    <small>
+                        Customer Service Management
+                    </small>
+
                 </div>
 
-                <div class="skill">
-                    <span>03</span>
-                    <h3>DATABASES</h3>
-                    <p>
-                        Working with application data and
-                        reliable data-driven solutions.
-                    </p>
+
+                <div class="skill-card">
+
+                    <span>▦</span>
+
+                    <b>UI Builder</b>
+
+                    <small>
+                        Workspace Experiences
+                    </small>
+
                 </div>
 
-                <div class="skill">
-                    <span>04</span>
-                    <h3>WEB TECHNOLOGIES</h3>
-                    <p>
-                        Creating responsive and user-focused
-                        web experiences.
-                    </p>
+
+                <div class="skill-card">
+
+                    <span>▣</span>
+
+                    <b>Service Portal</b>
+
+                    <small>
+                        Portals &amp; Widgets
+                    </small>
+
+                </div>
+
+
+                <div class="skill-card">
+
+                    <span>⚡</span>
+
+                    <b>Flow Designer</b>
+
+                    <small>
+                        Request Fulfillment Automation
+                    </small>
+
+                </div>
+
+
+                <div class="skill-card">
+
+                    <span>&lt;/&gt;</span>
+
+                    <b>Scripting</b>
+
+                    <small>
+                        Business Rules &amp; Scripts
+                    </small>
+
+                </div>
+
+
+                <div class="skill-card">
+
+                    <span>JS</span>
+
+                    <b>JavaScript</b>
+
+                    <small>
+                        ServiceNow Development
+                    </small>
+
+                </div>
+
+
+                <div class="skill-card">
+
+                    <span>↔</span>
+
+                    <b>Integrations</b>
+
+                    <small>
+                        Inbound Email &amp; Configuration
+                    </small>
+
+                </div>
+
+
+                <div class="skill-card">
+
+                    <span>▤</span>
+
+                    <b>Service Catalog</b>
+
+                    <small>
+                        Catalog Development
+                    </small>
+
+                </div>
+
+
+                <div class="skill-card">
+
+                    <span>◉</span>
+
+                    <b>Data Migration</b>
+
+                    <small>
+                        Import Sets &amp; Transform Maps
+                    </small>
+
+                </div>
+
+
+                <div class="skill-card">
+
+                    <span>▣</span>
+
+                    <b>Mobile</b>
+
+                    <small>
+                        Now Mobile &amp; Mobile Agent
+                    </small>
+
+                </div>
+
+
+                <div class="skill-card">
+
+                    <span>▤</span>
+
+                    <b>Analytics</b>
+
+                    <small>
+                        Reports &amp; Dashboards
+                    </small>
+
                 </div>
 
             </div>
 
-        </div>
-
-    </section>
+        </section>
 
 
-    <!-- =========================================
-         CONTACT
-    ========================================== -->
-    <section class="content-section contact" id="contact">
 
-        <div class="container contact-inner">
+        <!-- =================================================
+             PROJECT / SOLUTIONS SECTION
+             NO PROJECT NAMES
+             ================================================= -->
 
-            <div class="section-heading">
+        <section
+            class="services-section page-width"
+            id="services"
+        >
 
-                <span class="section-number">04</span>
+            <div class="section-label">
+
+                ▣
+                <span>PROJECTS</span>
+                <i></i>
+
+            </div>
+
+
+            <div class="services-panel glass">
+
 
                 <div>
-                    <span class="section-kicker">
-                        GET IN TOUCH
-                    </span>
 
-                    <h2>
-                        LET'S BUILD<br>
-                        SOMETHING.
-                    </h2>
+                    <h3>
+                        Solutions I
+                        <em>Deliver</em>
+                    </h3>
+
+
+                    <p>
+
+                        I contribute to ServiceNow development and
+                        implementation across ITSM, CSM, Portals,
+                        Workspaces, Service Catalog, automation,
+                        mobile applications, data migration and
+                        custom applications. My work focuses on
+                        translating business requirements into
+                        practical technical solutions.
+
+                    </p>
+
+                </div>
+
+
+                <div class="service-tags">
+
+                    <span>ITSM</span>
+                    <span>CSM</span>
+                    <span>Service Catalog</span>
+                    <span>UI Builder</span>
+                    <span>Workspaces</span>
+                    <span>Employee Center</span>
+                    <span>Service Portal</span>
+                    <span>Automation</span>
+                    <span>Mobile</span>
+                    <span>Custom Applications</span>
+                    <span>Data Migration</span>
+                    <span>Platform Configuration</span>
+
                 </div>
 
             </div>
 
-            <p class="contact-description">
-                Interested in working together or discussing
-                an opportunity? Let's connect.
-            </p>
-
-            <a
-                href="mailto:your-email@example.com"
-                class="contact-link"
-            >
-                YOUR-EMAIL@EXAMPLE.COM
-            </a>
-
-        </div>
-
-    </section>
+        </section>
 
 
-    <!-- =========================================
+
+        <!-- =================================================
+             EDUCATION
+             ================================================= -->
+
+        <section
+            class="education-section page-width"
+            id="education"
+        >
+
+            <div class="education-panel glass">
+
+
+                <!-- Education -->
+
+                <div>
+
+                    <div class="section-label">
+
+                        🎓
+                        <span>EDUCATION</span>
+                        <i></i>
+
+                    </div>
+
+
+                    <h3>
+                        Academic Foundation
+                    </h3>
+
+
+                    <div class="education-entry">
+
+                        <b>
+                            M. Sc (Computer Science)
+                        </b>
+
+                        <span>
+                            Osmania University · October 2023
+                        </span>
+
+                    </div>
+
+
+                    <div class="education-entry">
+
+                        <b>
+                            B. Sc (Computer Science)
+                        </b>
+
+                        <span>
+                            Osmania University · September 2021
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- Certificates -->
+
+                <div>
+
+                    <div class="section-label">
+
+                        ✥
+                        <span>CERTIFICATES</span>
+                        <i></i>
+
+                    </div>
+
+
+                    <h3>
+                        Professional Credentials
+                    </h3>
+
+
+                    <div class="certificate">
+
+                        <span>✓</span>
+
+                        Certified System Administrator
+
+                        <b>
+                            CSA
+                        </b>
+
+                    </div>
+
+
+                    <div class="certificate">
+
+                        <span>✓</span>
+
+                        IT Service Management
+
+                        <b>
+                            CIS-ITSM
+                        </b>
+
+                    </div>
+
+
+                    <div class="certificate">
+
+                        <span>✓</span>
+
+                        10+ Micro-Certifications
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             CONTACT
+             ================================================= -->
+
+        <section
+            class="contact-section page-width"
+            id="contact"
+        >
+
+            <div class="contact-panel glass">
+
+
+                <div class="contact-copy">
+
+                    <div class="section-label">
+
+                        ✉
+                        <span>CONTACT</span>
+                        <i></i>
+
+                    </div>
+
+
+                    <h3>
+
+                        Let's Work
+                        <br>
+                        <em>Together</em>
+
+                    </h3>
+
+
+                    <p>
+
+                        Interested in ServiceNow development,
+                        technical consulting, solutioning,
+                        implementation or professional collaboration?
+                        Get in touch.
+
+                    </p>
+
+
+                    <div class="contact-list">
+
+                        <a
+                            href="mailto:bhanuvamshi0211@gmail.com"
+                        >
+                            ✉
+                            <span>
+                                bhanuvamshi0211@gmail.com
+                            </span>
+                        </a>
+
+
+                        <a
+                            href="tel:+919959073606"
+                        >
+                            ⌕
+                            <span>
+                                +91 9959073606
+                            </span>
+                        </a>
+
+
+                        <a
+                            href="https://github.com/BhanuVamshi02"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            ◉
+                            <span>
+                                github.com/BhanuVamshi02
+                            </span>
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- Contact Form -->
+
+                <form
+                    class="contact-form"
+                    id="contactForm"
+                >
+
+                    <div class="form-two">
+
+                        <input
+                            id="name"
+                            type="text"
+                            placeholder="Your Name"
+                            autocomplete="name"
+                            required
+                        >
+
+                        <input
+                            id="email"
+                            type="email"
+                            placeholder="Your Email"
+                            autocomplete="email"
+                            required
+                        >
+
+                    </div>
+
+
+                    <input
+                        id="subject"
+                        type="text"
+                        placeholder="Subject"
+                        required
+                    >
+
+
+                    <textarea
+                        id="message"
+                        rows="6"
+                        placeholder="Tell me what you'd like to discuss..."
+                        required
+                    ></textarea>
+
+
+                    <button
+                        class="cta primary"
+                        type="submit"
+                    >
+
+                        Send Message
+
+                        <strong>
+                            →
+                        </strong>
+
+                    </button>
+
+
+                    <small id="formStatus"></small>
+
+                </form>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+
+    <!-- =====================================================
          FOOTER
-    ========================================== -->
-    <footer>
+         ===================================================== -->
 
-        <div class="container footer-inner">
+    <footer class="footer page-width">
 
-            <span>
-                © <span id="year"></span> BHANU VAMSHI
+        <a
+            class="brand"
+            href="#home"
+        >
+
+            <span class="brand-mark">
+                BV
             </span>
 
-            <a href="#home">
-                BACK TO TOP ↑
-            </a>
+            <span class="brand-name">
+                Bhanu Vamshi
+            </span>
 
-        </div>
+        </a>
+
+
+        <span>
+            ©
+            <span id="year"></span>
+            Bhanu Vamshi.
+            All rights reserved.
+        </span>
+
+
+        <a href="#home">
+            Back to top ↑
+        </a>
 
     </footer>
 
+
+
+    <!-- JavaScript -->
 
     <script src="script.js"></script>
 
