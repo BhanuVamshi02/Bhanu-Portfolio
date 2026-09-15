@@ -1,612 +1,262 @@
-const $ = (selector, root = document) =>
-  root.querySelector(selector);
-
-const $$ = (selector, root = document) =>
-  [...root.querySelectorAll(selector)];
-
+const $ = (selector, root = document) => root.querySelector(selector);
+const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
 
 /* =========================================
-   MOBILE NAVIGATION
+   MOBILE MENU
 ========================================= */
 
-const mobileToggle = $("#mobileToggle");
+const menuButton = $("#menuButton");
 const mobileNav = $("#mobileNav");
 
-if (mobileToggle && mobileNav) {
-  mobileToggle.addEventListener("click", () => {
-    const isOpen = mobileNav.classList.toggle("open");
+if (menuButton && mobileNav) {
+  menuButton.addEventListener("click", () => {
+    const open = mobileNav.classList.toggle("open");
 
-    mobileToggle.textContent = isOpen ? "×" : "☰";
-    mobileToggle.setAttribute(
-      "aria-expanded",
-      String(isOpen)
-    );
+    menuButton.textContent = open ? "×" : "☰";
+    menuButton.setAttribute("aria-expanded", String(open));
   });
 
-  $$(".mobile-nav a").forEach((link) => {
+  $$(".mobile-nav a").forEach(link => {
     link.addEventListener("click", () => {
       mobileNav.classList.remove("open");
-
-      mobileToggle.textContent = "☰";
-      mobileToggle.setAttribute(
-        "aria-expanded",
-        "false"
-      );
+      menuButton.textContent = "☰";
+      menuButton.setAttribute("aria-expanded", "false");
     });
   });
 }
 
-
 /* =========================================
-   THEME TOGGLE
+   THEME BUTTON
 ========================================= */
 
-const themeSwitch = $("#themeSwitch");
+const themeToggle = $("#themeToggle");
 
-if (themeSwitch) {
-  themeSwitch.addEventListener("click", () => {
-    document.body.classList.toggle("light");
-  });
-}
-
-
-/* =========================================
-   SCROLL REVEAL ANIMATION
-========================================= */
-
-const revealElements = $$(".reveal");
-
-const revealObserver = new IntersectionObserver(
-  (entries, observer) => {
-    entries.forEach((entry) => {
-
-      if (!entry.isIntersecting) {
-        return;
-      }
-
-      entry.target.classList.add("visible");
-
-      observer.unobserve(entry.target);
-    });
-  },
-  {
-    threshold: 0.12
-  }
-);
-
-revealElements.forEach((element, index) => {
-
-  element.style.transitionDelay =
-    `${Math.min(index * 30, 180)}ms`;
-
-  revealObserver.observe(element);
+themeToggle?.addEventListener("click", () => {
+  document.body.classList.toggle("light");
 });
 
+/* =========================================
+   SCROLL REVEAL
+========================================= */
+
+const revealItems = $$(".reveal");
+
+if ("IntersectionObserver" in window) {
+  const revealObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+
+      entry.target.classList.add("visible");
+      observer.unobserve(entry.target);
+    });
+  }, { threshold: 0.08 });
+
+  revealItems.forEach((item, index) => {
+    item.style.transitionDelay = `${Math.min(index * 24, 180)}ms`;
+    revealObserver.observe(item);
+  });
+} else {
+  revealItems.forEach(item => item.classList.add("visible"));
+}
 
 /* =========================================
    ACTIVE NAVIGATION
 ========================================= */
 
-const sections = $$("main section[id]");
-const navigationLinks = $$(".nav a");
+const pageSections = $$("main section[id]");
+const navLinks = $$(".desktop-nav a");
 
-const sectionObserver = new IntersectionObserver(
-  (entries) => {
+if ("IntersectionObserver" in window) {
+  const navObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
 
-    entries.forEach((entry) => {
-
-      if (!entry.isIntersecting) {
-        return;
-      }
-
-      navigationLinks.forEach((link) => {
-
-        const target =
-          link.getAttribute("href") ===
-          `#${entry.target.id}`;
-
+      navLinks.forEach(link => {
         link.classList.toggle(
           "active",
-          target
+          link.getAttribute("href") === `#${entry.target.id}`
         );
       });
-
     });
+  }, {
+    rootMargin: "-42% 0px -48% 0px"
+  });
 
-  },
-  {
-    rootMargin: "-35% 0px -55% 0px"
-  }
-);
-
-sections.forEach((section) => {
-  sectionObserver.observe(section);
-});
-
+  pageSections.forEach(section => navObserver.observe(section));
+}
 
 /* =========================================
    FLOATING PARTICLES
 ========================================= */
 
-const particleContainer =
-  $("#particles");
+const particleLayer = $("#particles");
 
-if (particleContainer) {
-
-  const particleCount = 34;
-
-  for (let i = 0; i < particleCount; i++) {
-
-    const particle =
-      document.createElement("span");
+if (particleLayer) {
+  for (let i = 0; i < 32; i++) {
+    const particle = document.createElement("span");
 
     particle.className = "particle";
+    particle.style.left = `${Math.random() * 100}%`;
+    particle.style.top = `${Math.random() * 100}%`;
+    particle.style.animationDelay = `${Math.random() * -8}s`;
+    particle.style.animationDuration = `${5 + Math.random() * 6}s`;
 
-    particle.style.left =
-      `${Math.random() * 100}%`;
-
-    particle.style.top =
-      `${Math.random() * 100}%`;
-
-    particle.style.animationDelay =
-      `${Math.random() * -7}s`;
-
-    particle.style.animationDuration =
-      `${5 + Math.random() * 6}s`;
-
-    particleContainer.appendChild(
-      particle
-    );
+    particleLayer.appendChild(particle);
   }
 }
 
-
 /* =========================================
-   BACKGROUND PARALLAX EFFECT
+   SUBTLE BACKGROUND PARALLAX
 ========================================= */
 
-const background =
-  $(".background");
+const background = $(".site-bg");
 
-window.addEventListener(
-  "pointermove",
-  (event) => {
+window.addEventListener("pointermove", event => {
+  if (!background || window.innerWidth < 900) return;
 
-    if (!background) {
-      return;
-    }
+  const x = (event.clientX / window.innerWidth - 0.5) * 5;
+  const y = (event.clientY / window.innerHeight - 0.5) * 3;
 
-    /*
-      Disable parallax on mobile
-      for better performance.
-    */
-
-    if (window.innerWidth <= 700) {
-      return;
-    }
-
-    const mouseX =
-      event.clientX /
-      window.innerWidth -
-      0.5;
-
-    const mouseY =
-      event.clientY /
-      window.innerHeight -
-      0.5;
-
-    const moveX =
-      mouseX * 8;
-
-    const moveY =
-      mouseY * 6;
-
-    background.style.transform =
-      `scale(1.035) translate(${moveX}px, ${moveY}px)`;
-  },
-  {
-    passive: true
-  }
-);
-
+  background.style.transform =
+    `scale(1.02) translate(${x}px, ${y}px)`;
+}, { passive: true });
 
 /* =========================================
-   HERO IMAGE FLOATING EFFECT
+   COUNTERS
 ========================================= */
 
-const heroCharacter =
-  $(".hero-character-wrap");
+const countElements = $$("[data-count]");
 
-if (heroCharacter) {
+if ("IntersectionObserver" in window && countElements.length) {
+  const countObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
 
-  let animationFrame;
+      const element = entry.target;
+      const target = Number(element.dataset.count);
+      const start = performance.now();
+      const duration = 900;
 
-  window.addEventListener(
-    "scroll",
-    () => {
+      const tick = now => {
+        const progress = Math.min((now - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
 
-      if (window.innerWidth <= 700) {
-        return;
-      }
+        if (target % 1 !== 0) {
+          element.textContent = `${(target * eased).toFixed(1)}+`;
+        } else {
+          element.textContent = `${Math.round(target * eased)}+`;
+        }
 
-      if (animationFrame) {
-        cancelAnimationFrame(animationFrame);
-      }
+        if (progress < 1) {
+          requestAnimationFrame(tick);
+        } else {
+          element.textContent = `${target}+`;
+        }
+      };
 
-      animationFrame =
-        requestAnimationFrame(() => {
+      requestAnimationFrame(tick);
+      observer.unobserve(element);
+    });
+  }, { threshold: 0.7 });
 
-          const scrollPosition =
-            window.scrollY;
-
-          const movement =
-            Math.min(
-              scrollPosition * 0.04,
-              15
-            );
-
-          heroCharacter.style.transform =
-            `translateY(${-movement}px)`;
-
-        });
-    },
-    {
-      passive: true
-    }
-  );
+  countElements.forEach(element => countObserver.observe(element));
 }
-
-
-/* =========================================
-   STATS COUNTER ANIMATION
-========================================= */
-
-const counters =
-  $$("[data-number]");
-
-const counterObserver =
-  new IntersectionObserver(
-    (entries, observer) => {
-
-      entries.forEach((entry) => {
-
-        if (!entry.isIntersecting) {
-          return;
-        }
-
-        const element =
-          entry.target;
-
-        const target =
-          Number(
-            element.dataset.number
-          );
-
-        const duration = 900;
-
-        const startTime =
-          performance.now();
-
-        function animate(currentTime) {
-
-          const progress =
-            Math.min(
-              (currentTime - startTime) /
-              duration,
-              1
-            );
-
-          /*
-            Ease-out animation
-          */
-
-          const eased =
-            1 -
-            Math.pow(
-              1 - progress,
-              3
-            );
-
-          let value;
-
-          if (target === 2.7) {
-
-            value =
-              (
-                target *
-                eased
-              ).toFixed(1);
-
-          } else {
-
-            value =
-              Math.round(
-                target *
-                eased
-              );
-          }
-
-          element.textContent =
-            `${value}+`;
-
-          if (progress < 1) {
-
-            requestAnimationFrame(
-              animate
-            );
-
-          } else {
-
-            /*
-              Make sure final value
-              is exact.
-            */
-
-            element.textContent =
-              `${target}+`;
-          }
-        }
-
-        requestAnimationFrame(
-          animate
-        );
-
-        observer.unobserve(
-          element
-        );
-      });
-    },
-    {
-      threshold: 0.8
-    }
-  );
-
-counters.forEach((counter) => {
-  counterObserver.observe(counter);
-});
-
 
 /* =========================================
    CONTACT FORM
 ========================================= */
 
-const contactForm =
-  $("#contactForm");
+const contactForm = $("#contactForm");
+const formStatus = $("#formStatus");
 
-const formStatus =
-  $("#formStatus");
+contactForm?.addEventListener("submit", event => {
+  event.preventDefault();
 
-if (contactForm) {
+  const name = $("#name")?.value.trim();
+  const email = $("#email")?.value.trim();
+  const subject = $("#subject")?.value.trim();
+  const message = $("#message")?.value.trim();
 
-  contactForm.addEventListener(
-    "submit",
-    (event) => {
-
-      event.preventDefault();
-
-      const name =
-        $("#name")?.value.trim();
-
-      const email =
-        $("#email")?.value.trim();
-
-      const subject =
-        $("#subject")?.value.trim();
-
-      const message =
-        $("#message")?.value.trim();
-
-
-      /* Basic validation */
-
-      if (
-        !name ||
-        !email ||
-        !subject ||
-        !message
-      ) {
-
-        if (formStatus) {
-
-          formStatus.textContent =
-            "Please complete all fields.";
-
-        }
-
-        return;
-      }
-
-
-      /*
-        Create email content.
-      */
-
-      const emailBody =
-        `Name: ${name}\n` +
-        `Email: ${email}\n\n` +
-        `${message}`;
-
-
-      /*
-        Open the user's default
-        email application.
-      */
-
-      const mailto =
-        "mailto:bhanuvamshi0211@gmail.com" +
-        `?subject=${encodeURIComponent(subject)}` +
-        `&body=${encodeURIComponent(emailBody)}`;
-
-
-      if (formStatus) {
-
-        formStatus.textContent =
-          "Opening your email client…";
-
-      }
-
-
-      window.location.href =
-        mailto;
-
+  if (!name || !email || !subject || !message) {
+    if (formStatus) {
+      formStatus.textContent = "Please complete all fields.";
     }
-  );
-}
+    return;
+  }
 
+  const body =
+    `Name: ${name}\n` +
+    `Email: ${email}\n\n` +
+    message;
+
+  const mailto =
+    `mailto:bhanuvamshi0211@gmail.com` +
+    `?subject=${encodeURIComponent(subject)}` +
+    `&body=${encodeURIComponent(body)}`;
+
+  if (formStatus) {
+    formStatus.textContent = "Opening your email client…";
+  }
+
+  window.location.href = mailto;
+});
 
 /* =========================================
-   SMOOTH SCROLLING
+   CLOSE MENU WITH ESC
 ========================================= */
 
-$$('a[href^="#"]').forEach(
-  (link) => {
+document.addEventListener("keydown", event => {
+  if (
+    event.key === "Escape" &&
+    mobileNav?.classList.contains("open")
+  ) {
+    mobileNav.classList.remove("open");
 
-    link.addEventListener(
-      "click",
-      (event) => {
-
-        const targetId =
-          link.getAttribute("href");
-
-        if (
-          !targetId ||
-          targetId === "#"
-        ) {
-          return;
-        }
-
-        const target =
-          document.querySelector(
-            targetId
-          );
-
-        if (!target) {
-          return;
-        }
-
-        event.preventDefault();
-
-        target.scrollIntoView({
-          behavior: "smooth",
-          block: "start"
-        });
-
-      }
-    );
-
-  }
-);
-
-
-/* =========================================
-   ESC KEY - CLOSE MOBILE MENU
-========================================= */
-
-document.addEventListener(
-  "keydown",
-  (event) => {
-
-    if (
-      event.key === "Escape" &&
-      mobileNav &&
-      mobileNav.classList.contains("open")
-    ) {
-
-      mobileNav.classList.remove(
-        "open"
-      );
-
-      if (mobileToggle) {
-
-        mobileToggle.textContent =
-          "☰";
-
-        mobileToggle.setAttribute(
-          "aria-expanded",
-          "false"
-        );
-
-      }
+    if (menuButton) {
+      menuButton.textContent = "☰";
+      menuButton.setAttribute("aria-expanded", "false");
     }
-
   }
-);
-
+});
 
 /* =========================================
    CURRENT YEAR
 ========================================= */
 
-const yearElement =
-  $("#year");
+const year = $("#year");
 
-if (yearElement) {
-
-  yearElement.textContent =
-    new Date().getFullYear();
-
+if (year) {
+  year.textContent = new Date().getFullYear();
 }
 
-
 /* =========================================
-   IMAGE LOAD EFFECT
+   PREVENT BROKEN HASH LINKS
 ========================================= */
 
-const heroImage =
-  $(".hero-character-wrap img");
+$$('a[href^="#"]').forEach(link => {
+  link.addEventListener("click", event => {
+    const id = link.getAttribute("href");
 
-if (heroImage) {
+    if (!id || id === "#") return;
 
-  if (heroImage.complete) {
+    const target = document.querySelector(id);
 
-    heroImage.classList.add(
-      "image-loaded"
-    );
+    if (!target) return;
 
-  } else {
+    event.preventDefault();
 
-    heroImage.addEventListener(
-      "load",
-      () => {
-
-        heroImage.classList.add(
-          "image-loaded"
-        );
-
-      }
-    );
-
-  }
-}
-
+    target.scrollIntoView({
+      behavior: "smooth",
+      block: "start"
+    });
+  });
+});
 
 /* =========================================
-   REDUCED MOTION SUPPORT
-========================================= */
-
-const reducedMotion =
-  window.matchMedia(
-    "(prefers-reduced-motion: reduce)"
-  );
-
-if (reducedMotion.matches) {
-
-  document.documentElement.style
-    .scrollBehavior = "auto";
-
-}
-
-
-/* =========================================
-   CONSOLE BRANDING
+   CONSOLE MESSAGE
 ========================================= */
 
 console.log(
   "%cBhanu Vamshi Portfolio",
-  "color:#f5b945;font-size:18px;font-weight:700;"
-);
-
-console.log(
-  "%cServiceNow Professional",
-  "color:#9aa8b3;font-size:12px;"
+  "color:#f4b63f;font-size:18px;font-weight:800;"
 );
