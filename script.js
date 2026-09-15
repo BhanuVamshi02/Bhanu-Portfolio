@@ -26,10 +26,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const mobileNav =
         document.getElementById("mobileNav");
-
-    const themeToggle =
-        document.getElementById("themeToggle");
-
     const contactForm =
         document.getElementById("contactForm");
 
@@ -63,67 +59,79 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       HERO SCROLL OVERLAY
-       
-       IMPORTANT BEHAVIOR:
+       PAGE BACKGROUND SCROLL FADE
 
-       At top:
-           .hero.scrolled is REMOVED
-           background-overlay = opacity 0
-
-       After scrolling:
-           .hero.scrolled is ADDED
-           background-overlay = opacity 1
+       The fade starts around the Stats section and
+       progressively hides the anime background as the
+       user moves through the rest of the page.
        ===================================================== */
 
-    function updateHeroScrollState() {
+    function updatePageBackgroundFade() {
 
-        if (!hero) {
+        const stats =
+            document.querySelector(".stats");
+
+        const scrollPosition =
+            window.scrollY || window.pageYOffset;
+
+        if (!stats) {
+            document.documentElement.style.setProperty(
+                "--page-fade",
+                "0"
+            );
             return;
         }
 
-        const scrollPosition =
-            window.scrollY;
+        const statsTop =
+            stats.getBoundingClientRect().top +
+            scrollPosition;
 
-        const scrollThreshold =
-            80;
+        /* Start fading around the Stats section. */
+        const fadeStart =
+            statsTop -
+            window.innerHeight * 0.45;
 
-
-        if (
-            scrollPosition >
-            scrollThreshold
-        ) {
-
-            hero.classList.add(
-                "scrolled"
+        /* Spread the fade across the sections below. */
+        const fadeDistance =
+            Math.max(
+                window.innerHeight * 1.35,
+                1050
             );
 
-        } else {
+        let progress =
+            (scrollPosition - fadeStart) /
+            fadeDistance;
 
-            hero.classList.remove(
-                "scrolled"
+        progress =
+            Math.max(
+                0,
+                Math.min(1, progress)
             );
 
-        }
+        /* Smoothstep easing for a softer transition. */
+        const easedProgress =
+            progress *
+            progress *
+            (3 - 2 * progress);
 
+        document.documentElement.style.setProperty(
+            "--page-fade",
+            easedProgress.toFixed(3)
+        );
 
-        /* Header subtle scroll effect */
-
+        /* Header scroll state. */
         if (topbar) {
 
-            if (
-                scrollPosition >
-                30
-            ) {
+            if (scrollPosition > 30) {
 
                 topbar.classList.add(
-                    "is-scrolled"
+                    "scrolled"
                 );
 
             } else {
 
                 topbar.classList.remove(
-                    "is-scrolled"
+                    "scrolled"
                 );
 
             }
@@ -133,16 +141,32 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-    /* Run immediately */
+    /* Initial background state. */
+    updatePageBackgroundFade();
 
-    updateHeroScrollState();
 
-
-    /* Run during scroll */
+    /* Efficient scroll updates using requestAnimationFrame. */
+    let scrollTicking = false;
 
     window.addEventListener(
         "scroll",
-        updateHeroScrollState,
+        () => {
+
+            if (scrollTicking) {
+                return;
+            }
+
+            scrollTicking = true;
+
+            window.requestAnimationFrame(() => {
+
+                updatePageBackgroundFade();
+
+                scrollTicking = false;
+
+            });
+
+        },
         {
             passive: true
         }
@@ -270,56 +294,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     );
 
-
-    /* =====================================================
-       THEME TOGGLE
-       ===================================================== */
-
-    const savedTheme =
-        localStorage.getItem(
-            "bhanu-theme"
-        );
-
-
-    if (
-        savedTheme === "light"
-    ) {
-
-        document.body.classList.add(
-            "light"
-        );
-
-    }
-
-
-    if (themeToggle) {
-
-        themeToggle.addEventListener(
-            "click",
-            () => {
-
-                document.body.classList.toggle(
-                    "light"
-                );
-
-
-                const isLight =
-                    document.body.classList.contains(
-                        "light"
-                    );
-
-
-                localStorage.setItem(
-                    "bhanu-theme",
-                    isLight
-                        ? "light"
-                        : "dark"
-                );
-
-            }
-        );
-
-    }
 
 
     /* =====================================================
